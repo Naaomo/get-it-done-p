@@ -20,7 +20,7 @@ Need help there mate? Let me give you a hand, for a price!
 
 ## Technologies
 
-![Technologies/Architecture Drawing](architecture.png)
+![Technologies/Architecture Drawing](architecture_technologies.png)
 
 ## Future implementations
 

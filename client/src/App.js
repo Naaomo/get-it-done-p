@@ -14,13 +14,18 @@ class App extends React.Component {
     this.state = {
       showSignup: false,
       showLogin: false,
-      // setShow: false,
+      setShow: false,
       email: "",
       password: "",
       errorMessage: ""
     };
 
   }
+//  handleClose = () => {
+//    this.setState({setShow: false})
+//  }
+//  handleShow = () => setShow(true);
+
   handleModelSign = () => {
     this.setState({ 
       showSignup: !this.state.showSignup
@@ -91,9 +96,10 @@ class App extends React.Component {
               </Switch>
             </div>
           </Router>
-          <Button onClick={() => this.handleModelSign()}>Sign Up</Button>
-          <Button onClick={() => this.handleModelLogin()}>Login</Button>
-          <Modal show={this.state.showSignup}>
+          <Button variant="light" onClick={() => this.handleModelSign()}>Sign Up</Button>
+          <Button variant="light" onClick={() => this.handleModelLogin()}>Login</Button>
+
+          <Modal show={this.state.showSignup} onHide={this.state.showLogin}>
             <Modal.Header>
               Sign up now!
             </Modal.Header>
@@ -107,8 +113,8 @@ class App extends React.Component {
             <Modal.Footer>
               <Button onClick={() => {this.handleSubmit()}}>Submit</Button>
             </Modal.Footer>
-          </Modal>
-          <Modal show={this.state.showLogin}>
+         </Modal>
+          <Modal show={this.state.showLogin} onHide={ this.state.showSignup}>
             <Modal.Header>
               Login
             </Modal.Header>

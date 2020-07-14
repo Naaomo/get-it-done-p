@@ -49,7 +49,7 @@ con.connect(function(err) {
   });
 
 
-    console.log("Closing...");
+  console.log("Closing...");
 
   con.end();
 });

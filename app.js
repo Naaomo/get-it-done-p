@@ -1,8 +1,11 @@
+require('dotenv').config();
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const cookieSession = require('cookie-session');
+const passport = require('passport');
 // const passportSetup = require('./config/passport-setup');
 
 // var indexRouter = require('./routes/index');
@@ -16,11 +19,20 @@ var app = express();
 // app.set('view engine', 'jade');
 app.set('view engine', 'ejs');
 
+app.use(cookieSession({
+    maxAge: 24 * 60 * 60 * 1000,
+    keys: [process.env.COOKIE_KEY]
+}));
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+//Initialise passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // SET UP ROUTES
 // app.use('/', indexRouter);

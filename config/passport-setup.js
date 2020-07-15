@@ -42,7 +42,7 @@ passport.use(
                 if(results.data.length < 1){
                     db(`INSERT INTO users(fname, lname, email, ut_id, google_id, profile_img) VALUES ('${profile._json.given_name}', '${profile._json.family_name}', '${profile._json.email}', '1', '${profile.id}', '${profile._json.picture}'); SELECT * FROM users WHERE google_id='${profile.id}';`)
                         .then(results => {
-                            console.log(results.data[1][0]);
+                            console.log(results.data);
                             done(null, results.data[1][0]);
                         })
                         .catch(err => {
@@ -50,7 +50,7 @@ passport.use(
                         })
                 } // else, print already existing user to the console
                 else{
-                    console.log(results.data[0]);
+                    console.log(results.data);
                     done(null, results.data[0]);
                 }
             })

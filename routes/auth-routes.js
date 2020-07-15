@@ -10,17 +10,19 @@ router.get('/login', (req, res) => {
 //auth logout
 router.get('/logout', (req, res) => {
     //TODO: handle with passport
-    res.send('logging out');
+    req.logout();
+    res.redirect('/');
 });
 
-//auth with google TODO: handle with passport
+//auth with google
 router.get('/google', passport.authenticate('google', {
     scope: ['profile', 'email']
 }));
 
 // Google callback route
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
-    res.send(req.user);
+    // res.send(req.user);
+    res.redirect('/profile/');
 });
 
 module.exports = router;

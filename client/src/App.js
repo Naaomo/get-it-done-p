@@ -104,6 +104,7 @@ class App extends React.Component {
           </Router>
           <button className="btn btn-light" onClick={() => this.handleModelSign()}>Sign Up</button>
           <button className="btn btn-light" onClick={() => this.handleModelLogin()}>Login</button>
+          <p>{pageCookie}</p>
         </div>
           <Modal show={this.state.showSignup} 
                  onHide={this.state.showLogin}>

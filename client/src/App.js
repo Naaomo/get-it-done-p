@@ -5,6 +5,7 @@ import GetService from './components/GetService';
 import Login from './components/Login';
 import Search from './components/Search'
 import { BrowserRouter as Router, Switch, Route, Link, NavLink } from "react-router-dom";
+// import Demo from './components/calendar';
 
 class App extends React.Component {
   constructor(props) {
@@ -41,6 +42,7 @@ class App extends React.Component {
           <Login />
         </div> 
         <Search />
+        {/* <Demo /> */}
       </>
     );
   }

@@ -3,11 +3,11 @@ import './search.css';
 import { Button, Modal } from 'react-bootstrap';
 import Geonames from 'geonames.js'; 
 
-const geonames = new Geonames({
-  username: 'myusername',
-  lan: 'en',
-  encoding: 'JSON'
-});
+// const geonames = new Geonames({
+//   username: 'mina066',
+//   lan: 'en',
+//   encoding: 'JSON'
+// });
 
 class Search extends React.Component {
   constructor(props) {
@@ -98,40 +98,8 @@ class Search extends React.Component {
   // }
 
   async showDropdown() {
-    console.log("arrive here?")
-    try{
-      const continents = await geonames.countryInfo({q: 'spain'}) //get continents
-    } catch(err){
-      console.error(err);
-    }
 
-    // promise
-    geonames.search({q: 'spain'}) //get continents
-    // .then(resp => {
-    //   console.log(resp.geonames);
-      .then(countries => {
-        return geonames.children({geonameId: countries.geonames[0].geonameId})
-      })  
-      .then(states => {
-        return geonames.children({geonameId: states.geonames[0].geonameId});
-      })
-      .then(regions => {
-        return geonames.children({geonameId: regions.geonames[0].geonameId});
-      })
-      .then(cities => {
-        console.log(cities)
-        for(let i = 0; i < cities.geonames.length; i++) {
-          console.log(cities.geonames[i].name);
-          const {location} = this.state;
-          location.push(cities.geonames[i].name)
-          this.setState({
-            location: location
-          })
-        } console.log(this.state.location)
-       })
-       .catch(err => console.error(err));
- 
-      }
+  
   onSelected = () => {
 
   }
@@ -141,12 +109,12 @@ class Search extends React.Component {
         return (
           <>
             <input type="text" name="country" onChange={this.handleChange}/>
-            <select type="select" onChange={this.onSelected}>
+            {/* <select type="select" onChange={this.onSelected}>
               {this.state.location.map((city, index) => { 
                return <option key={index} value={index}>{city}</option>
               })
              }
-             </select>
+             </select> */}
             
             <input type="text" name="serviceType" onChange={this.handleChange}/>
             <button onClick={() => this.handleClick()}>Search</button>

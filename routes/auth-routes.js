@@ -35,12 +35,12 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
 
 
 //auth with Facebook
-router.get('/facebook', passport.authenticate('facebook'));
+router.get('/facebook', passport.authenticate('facebook', { scope: ['email'] }));
 
 // Google callback route
 router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) => {
-    // res.send(req.user);
-    res.redirect('/profile/');
+    let user = req.user;
+    res.cookie('userID', `${user.u_id}`).cookie('displayName', `${user.displayName}`).redirect(`${FE_URL}/`);
 });
 
 

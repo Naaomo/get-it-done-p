@@ -30,7 +30,7 @@ con.connect(function(err) {
       console.log("Table creation `serviceType` was successful!");
   });
 
-  sql = "DROP TABLE IF EXISTS users; CREATE TABLE users(u_id INT AUTO_INCREMENT PRIMARY KEY, fname VARCHAR(50) NOT NULL, lname VARCHAR(50) NOT NULL, email VARCHAR(200) NOT NULL, password VARCHAR(500), ut_id INT NOT NULL, verified TINYINT DEFAULT 0 NOT NULL, facebook_id VARCHAR(100) UNIQUE, google_id VARCHAR(100) UNIQUE, profile_img VARCHAR(1000), FOREIGN KEY (ut_id) REFERENCES userType(ut_id));";
+  sql = "DROP TABLE IF EXISTS users; CREATE TABLE users(u_id INT AUTO_INCREMENT PRIMARY KEY, displayName VARCHAR(100) NOT NULL, email VARCHAR(200) NOT NULL, password VARCHAR(500), ut_id INT NOT NULL, verified TINYINT DEFAULT 0 NOT NULL, facebook_id VARCHAR(100) UNIQUE, google_id VARCHAR(100) UNIQUE, profile_img VARCHAR(1000), FOREIGN KEY (ut_id) REFERENCES userType(ut_id));";
   con.query(sql, function (err, result) {
       if (err) throw err;
       console.log("Table creation `users` was successful!");

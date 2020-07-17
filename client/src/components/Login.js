@@ -106,8 +106,11 @@ export default class Login extends Component {
                   </div>
                   <div className="button-container">
                     <div className="btns">
-                      <button className="btn btn-primary"><i class="fab fa-facebook-f"></i> Login with <span>Facebook</span></button>
-                      <button className="btn btn-danger"><i class="fa fa-google"></i> Login with <span>Google</span></button>
+                      <a href="http://localhost:5000/auth/facebook"><button className="btn btn-primary"><i class="fab fa-facebook-f"></i> Login with <span>Facebook</span></button></a>
+                        <a href="http://localhost:5000/auth/google">
+                            <button className="btn btn-danger"><i className="fa fa-google"></i> Login
+                                with <span>Google</span></button>
+                        </a>
                     </div>  
                     <button className="login-signup-button" onClick={() => {this.handleLogin()}}>Login</button>
                   </div>

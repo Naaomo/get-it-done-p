@@ -30,7 +30,7 @@ passport.use(
         // passport callback function
 
         // console.log('passport callback function fired');
-        // console.log(profile);
+        console.log(profile);
         // console.log(`Firstname: ${profile._json.given_name}`);
         // console.log(`Lastname: ${profile._json.family_name}`);
         // console.log(`Email: ${profile._json.email}`);
@@ -42,7 +42,7 @@ passport.use(
                 // console.log(results.data);
                 // If user doesn't exist, Insert new user
                 if(results.data.length < 1){
-                    db(`INSERT INTO users(fname, lname, email, ut_id, google_id, profile_img) VALUES ('${profile._json.given_name}', '${profile._json.family_name}', '${profile._json.email}', '1', '${profile.id}', '${profile._json.picture}'); SELECT * FROM users WHERE google_id='${profile.id}';`)
+                    db(`INSERT INTO users(displayName, email, ut_id, google_id, profile_img) VALUES ('${profile._json.name}', '${profile._json.email}', '1', '${profile.id}', '${profile._json.picture}'); SELECT * FROM users WHERE google_id='${profile.id}';`)
                         .then(results => {
                             console.log(results.data);
                             done(null, results.data[1][0]);
@@ -68,13 +68,14 @@ passport.use(
         //options for the google strategy
         clientID: process.env.FACEBOOK_CLIENT_ID,
         clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-        callbackURL: "http://localhost:5000/auth/google/redirect"
+        callbackURL: "http://localhost:5000/auth/facebook/redirect",
+        profileFields: ['id', 'displayName', 'photos', 'email', 'gender', 'name']
     },
     function (accessToken, refreshToken, profile, done) {
         // passport callback function
 
         // console.log('passport callback function fired');
-        // console.log(profile);
+        console.log(profile);
         // console.log(`Firstname: ${profile._json.given_name}`);
         // console.log(`Lastname: ${profile._json.family_name}`);
         // console.log(`Email: ${profile._json.email}`);
@@ -86,7 +87,7 @@ passport.use(
                 // console.log(results.data);
                 // If user doesn't exist, Insert new user
                 if(results.data.length < 1){
-                    db(`INSERT INTO users(fname, lname, email, ut_id, facebook_id, profile_img) VALUES ('${profile._json.given_name}', '${profile._json.family_name}', '${profile._json.email}', '1', '${profile.id}', '${profile._json.picture}'); SELECT * FROM users WHERE google_id='${profile.id}';`)
+                    db(`INSERT INTO users(displayName, email, ut_id, facebook_id, profile_img) VALUES ('${profile.displayName}', '${profile._json.email}', '1', '${profile.id}', '${profile.photos[0].value}'); SELECT * FROM users WHERE facebook_id='${profile.id}';`)
                         .then(results => {
                             console.log(results.data);
                             done(null, results.data[1][0]);

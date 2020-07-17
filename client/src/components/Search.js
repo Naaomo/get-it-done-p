@@ -99,9 +99,6 @@ class Search extends React.Component {
 
   async showDropdown() {
 
-  
-  onSelected = () => {
-
   }
   
   render() {

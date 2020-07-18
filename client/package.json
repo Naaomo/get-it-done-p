@@ -8,6 +8,7 @@
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.5.0",
     "geonames.js": "^2.3.0",
+    "opencage-api-client": "^0.7.1",
     "react": "^16.13.1",
     "react-bootstrap": "^1.2.2",
     "react-dom": "^16.13.1",

@@ -1,7 +1,10 @@
 import React from 'react';
 import './search.css';
-// import { Button, Modal } from 'react-bootstrap';
-// import Geonames from 'geonames.js'; 
+import cleaning from './icons/cleaning.png';
+import gardening from './icons/garden.png';
+import ironing from './icons/household-appliance.png';
+import plumbing from './icons/plumbing.png';
+import cooking from './icons/baking.png';
 import 'opencage-api-client';
 const OCD_API_KEY = process.env.REACT_APP_OCD_API_KEY;
 
@@ -75,7 +78,7 @@ class Search extends React.Component {
     this.setState({
       data: dataObject
     })
-    this.showDropdown();
+    this.showCountryDropdown();
 
 
   }
@@ -125,7 +128,7 @@ class Search extends React.Component {
   //   })
   // }
 
-  async showDropdown() {
+  async showCountryDropdown() {
       const location = await fetch('https://api.first.org/data/v1/countries');
       const result = await location.json();
       Object.keys(result.data).forEach((key, index) => {
@@ -143,51 +146,87 @@ class Search extends React.Component {
       // console.log(countries);
   }
   
+  allCountries = () => {
+      // fetch(`http://battuta.medunes.net/api/country/all/?key=80b5e35938b588a65a40bb55a483caa7`)
+      //   .then(res => res.json())
+      //   .then(jsonData => {
+      //     console.log(jsonData)
+      //   });
+    };
   render() {
-   
+    const country = this.state.location;
         return (
-          <>
+          <> <div className="main-container">
             <div className="checkbox-container">         
-              <input type="checkbox" onChange={this.handleChange} className="checkbox" id="1" name="cleaning" value="clearning"/>
-                <label for="clearning">Cleaning</label>
-              <input type="checkbox" onChange={this.handleChange} className="checkbox" id="2" name="gardening" value="gardening"/>
-                <label for="clearning">Gardening</label>
-              <input type="checkbox" onChange={this.handleChange} className="checkbox" id="3" name="moving" value="moving"/>
-                <label for="clearning">Moving</label>
-              <input type="checkbox" onChange={this.handleChange} className="checkbox" id="4" name="plumbing" value="plumbing"/>
-                <label for="clearning">Plumbing</label>
-                <br></br>
+                <input type="checkbox" onChange={this.handleChange} className="checkbox" id="1" name="cleaning" value="clearning"/>
+                <div>
+                  <img src={cleaning} className="icon cleaning" alt="cleaning icon"/>  
+                  <label for="clearning">Cleaning </label>
+                </div>                
+                <input type="checkbox" onChange={this.handleChange} className="checkbox" id="2" name="gardening" value="gardening"/>
+                <div>
+                  <img src={gardening} className="icon gardening" alt="cleaning icon"/>   
+                  <label for="clearning">Gardening</label>
+                </div>
+                <input type="checkbox" onChange={this.handleChange} className="checkbox" id="3" name="ironing" value="ironing"/>
+                <div>  
+                  <img src={ironing} className="icon ironing" alt="cleaning icon"/> 
+                  <label for="clearning">Ironing</label>
+                </div>
+                <input type="checkbox" onChange={this.handleChange} className="checkbox" id="4" name="plumbing" value="plumbing"/>
+                <div>
+                  <img src={plumbing} className="icon plumbing" alt="cleaning icon"/> 
+                  <label for="clearning">Plumbing</label>
+                </div>
+                <input type="checkbox" onChange={this.handleChange} className="checkbox" id="4" name="cooking" value="cooking"/>
+                <div>
+                  <img src={cooking} className="icon cooking" alt="cleaning icon"/> 
+                  <label for="clearning">Cooking</label>
+                </div>
+             </div>
+                <div>
+                  <button className="nearby-button"  data-backdrop="false" onClick={() => this.getLocation()}>Find service nearby</button>
+                  <select type="select">
+                    <option selected hidden>Select your country</option>
+                  {this.state.location.map((city, index) => { 
+                  return <option key={index} value={index}>{city}</option>
+                  })
+                  } 
+                {/* <button onClick={() => this.getLocation()}>Find service nearby</button>
+                <select type="select">
+                  <option selected hidden>Select your country</option>
+                {this.state.location.map((city, index) => { 
+                return <option key={index} value={index}>{city}</option>
+                })
+                }  */}
+                 </select>
+                <button onClick= {() => this.allCountries()}>button</button>
+                <button onClick={() => this.handleClick()}>Search</button>
             </div> 
-            <div>
-              <button onClick={() => this.getLocation()}>Find service nearby</button>
-              <select type="select">
-                <option selected hidden>Select your country</option>
-              {this.state.location.map((city, index) => { 
-               return <option key={index} value={index}>{city}</option>
-              })
-              } 
-            </select>
+              <div className="card-container">
+                {this.state.data.map((each) => {
+                  return (
+                    <div className="card head" style={{width: '13rem'}}>
+                      <img className="card-img-top" src={each.image} alt="Card image cap"/>
+                      <div className="card-body">
+                        <h5 className="card-title">Card title</h5>
+                        <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                      </div>
+                  </div>
+                  )
+                })}
+              </div> 
             </div>
+        
+
             
-            <button onClick={() => this.handleClick()}>Search</button>
+            
+
             {/* <Modal show={this.state.showLocationPopup} 
                  onHide={!this.state.showLocationPopup}> */}
               
 
            {/* </Modal> */}
-            <div className="card-container">
-              {this.state.data.map((each) => {
-                return (
-                  <div className="card head" style={{width: '13rem'}}>
-                    <img className="card-img-top" src={each.image} alt="Card image cap"/>
-                    <div className="card-body">
-                      <h5 className="card-title">Card title</h5>
-                      <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    </div>
-                </div>
-                )
-              })}
-          </div>
           </>
         );
       }

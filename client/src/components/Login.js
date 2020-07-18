@@ -71,10 +71,10 @@ export default class Login extends Component {
       <>
    
           <button className="button" onClick={() => this.handleModelSign()}>Sign Up</button>
-          <button className="button" onClick={() => this.handleModelLogin()}>Login</button>
+          <button className="button" data-backdrop="non-static" data-keyboard="true" onClick={() => this.handleModelLogin()}>Login</button>
           <Modal show={this.state.showSignup} 
                  onHide={this.state.showLogin}>
-                <div className="form-sign-up">
+                <div className="form-sign-up" >
                   <div className="sign-up">
                   <h2>Sign Up</h2>
 		                <p>Please fill in this form to create an account!</p>
@@ -106,11 +106,8 @@ export default class Login extends Component {
                   </div>
                   <div className="button-container">
                     <div className="btns">
-                      <a href="http://localhost:5000/auth/facebook"><button className="btn btn-primary"><i class="fab fa-facebook-f"></i> Login with <span>Facebook</span></button></a>
-                        <a href="http://localhost:5000/auth/google">
-                            <button className="btn btn-danger"><i className="fa fa-google"></i> Login
-                                with <span>Google</span></button>
-                        </a>
+                    <button className="btn btn-primary"><i class="fab fa-facebook-f"></i> Login with <span>Facebook</span></button>
+                    <button className="btn btn-danger"><i className="fa fa-google"></i> Login with <span>Google</span></button>
                     </div>  
                     <button className="login-signup-button" onClick={() => {this.handleLogin()}}>Login</button>
                   </div>

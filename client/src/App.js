@@ -45,7 +45,9 @@ class App extends React.Component {
                   </Router>
                   <Login />
               </div>
-              <Search />
+              <div>
+                <Search />
+              </div>
               <p>{pageCookie}</p>
               {/* <Demo /> */}
           </div>

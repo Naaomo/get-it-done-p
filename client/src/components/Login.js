@@ -39,8 +39,27 @@ export default class Login extends Component {
     }
   };
 
-  handleLogin = () => {
+  handleLogin = async () => {
+     await fetch('/auth/login', {
+        method: 'POST',
+        headers: {
+            "Content-Type": "application/json"
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+        body: JSON.stringify({
+            email: this.state.email,
+            password: this.state.password
+        })
+    })
+    .then(response => response.json())
+    .then(json => {
+        console.log(json);
+    })
+    .catch(err => console.log(err));
     this.handleModelLogin()
+    document.location.reload();
+
   }
   handleSubmit = () => {
     // fetch('/users', {
@@ -79,16 +98,16 @@ export default class Login extends Component {
                   <h2>Sign Up</h2>
 		                <p>Please fill in this form to create an account!</p>
                       <hr/>
-                      <input type="text" className="name" placeholder="First Name" name="firstName" onChange={this.handleChange}/>  
-                      <input type="text" className="name" placeholder="Last Name" name="lastName" onChange={this.handleChange}/>  
-                      <input type="text" className="email" placeholder="email"name="email" onChange={this.handleChange}/>           
-                      <input type="password" className="password" placeholder="Password" name="password" onChange={this.handleChange}/>
-                      <input type="password" className="password" placeholder="Confirm Password" name="confirmPassword" onChange={this.handleChange}/>
+                      <input type="text" className="name" placeholder="First Name" name="firstName" onChange={(event) => this.handleChange(event)}/>
+                      <input type="text" className="name" placeholder="Last Name" name="lastName" onChange={(event) => this.handleChange(event)}/>
+                      <input type="text" className="email" placeholder="email"name="email" onChange={(event) => this.handleChange(event)}/>
+                      <input type="password" className="password" placeholder="Password" name="password" onChange={(event) => this.handleChange(event)}/>
+                      <input type="password" className="password" placeholder="Confirm Password" name="confirmPassword" onChange={(event) => this.handleChange(event)}/>
                   </div>
                   <div className="button-container">
                     <div className="btns">
-                      <button className="btn btn-primary"><i class="fab fa-facebook-f"></i>Sign up with <span>Facebook</span></button>
-                      <button className="btn btn-danger"><i class="fa fa-google"></i>Sign up with <span>Google</span></button>
+                      <button className="btn btn-primary"><i className="fab fa-facebook-f"></i>Sign up with <span>Facebook</span></button>
+                      <button className="btn btn-danger"><i className="fa fa-google"></i>Sign up with <span>Google</span></button>
                     </div>  
                     <button className="login-signup-button" onClick={() => {this.handleSubmit()}}>Signup</button>
                   </div>
@@ -98,16 +117,16 @@ export default class Login extends Component {
          <Modal show={this.state.showLogin} onHide={ this.state.showSignup}>
          <div className="form">
                   <div className="sign-up">
-                      <span class="fa fa-user"></span>
-                      <input type="text" className="email" placeholder="email"name="email" onChange={this.handleChange}/>          
+                      <span className="fa fa-user"></span>
+                      <input type="text" className="email" placeholder="email" name="email" onChange={(event) => this.handleChange(event)}/>
                       <br></br>
-                      <span class="fa fa-lock"></span>
-                      <input type="password" className="password" placeholder="Password" name="password" onChange={this.handleChange}/>
+                      <span className="fa fa-lock"></span>
+                      <input type="password" className="password" placeholder="Password" name="password" onChange={(event) => this.handleChange(event)}/>
                   </div>
                   <div className="button-container">
                     <div className="btns">
-                    <button className="btn btn-primary"><i class="fab fa-facebook-f"></i> Login with <span>Facebook</span></button>
-                    <button className="btn btn-danger"><i className="fa fa-google"></i> Login with <span>Google</span></button>
+                        <a href='http://localhost:5000/auth/facebook'><button className="btn btn-primary"><i className="fab fa-facebook-f"></i> Login with <span>Facebook</span></button></a>
+                        <a href='http://localhost:5000/auth/google'><button className="btn btn-danger"><i className="fa fa-google"></i> Login with <span>Google</span></button></a>
                     </div>  
                     <button className="login-signup-button" onClick={() => {this.handleLogin()}}>Login</button>
                   </div>

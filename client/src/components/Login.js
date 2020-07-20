@@ -8,17 +8,12 @@ export default class Login extends Component {
     this.state = {
       showSignup: false,
       showLogin: false,
+      fullName: "",
       email: "",
       password: "",
-      confirmPassword: '',
       errorMessage: ""
     };
-
   }
-//  handleClose = () => {
-//    this.setState({setShow: false})
-//  }
-//  handleShow = () => setShow(true);
 
   handleModelSign = () => {
     this.setState({ 
@@ -30,14 +25,15 @@ export default class Login extends Component {
   };
   handleChange = event => {
     const { name, value } = event.target;
-    const confirmPassword = event.target.value;
-    const password = event.target.value;
-    if (confirmPassword === password) {
-      return this.setState({
-        [name]: value
-      });
-    }
-  };
+    this.setState({[name]: value});
+    // const confirmPassword = event.target.value;
+    // const password = event.target.value;
+    // if (confirmPassword === password) {
+    //   return this.setState({
+    //     [name]: value
+    //   });
+    // }
+  }
 
   handleLogin = async () => {
      await fetch('/auth/login', {
@@ -59,79 +55,101 @@ export default class Login extends Component {
     .catch(err => console.log(err));
     this.handleModelLogin()
     document.location.reload();
+  }
 
+  handleSignUp = async () => {
+      await fetch('/auth/register', {
+          method: 'POST',
+          headers: {
+              "Content-Type": "application/json"
+          },
+          redirect: 'follow',
+          referrerPolicy: 'no-referrer',
+          body: JSON.stringify({
+              fullName: this.state.fullName,
+              email: this.state.email,
+              password: this.state.password
+          })
+      })
+          .then(response => response.json())
+          .then(json => {
+              console.log(json);
+          })
+          .catch(err => console.log(err));
+      this.handleModelSign();
+      this.handleModelLogin();
   }
-  handleSubmit = () => {
-    // fetch('/users', {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   },
-    //   body: JSON.stringify({
-          // fname: this.state.firstName,
-          // lname: this.state.lastName,
-    //     email: this.state.email,
-    //     password: this.state.password
-    //   })
-    // })
-    // .then((response) => {
-    //   console.log("data: ", repsonse.data);
-    // })
-    // .catch((error) => {
-    //   console.log("Error: ", error.response)
-        // this.setState({
-        //   errorMessage: error.response.data.message
-        // })
-    // })
-    this.handleModelSign();
-  }
+
   render() {
     return (
       <>
-   
-          <button className="button" onClick={() => this.handleModelSign()}>Sign Up</button>
-          <button className="button" data-backdrop="non-static" data-keyboard="true" onClick={() => this.handleModelLogin()}>Login</button>
+          <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-success" onClick={() => this.handleModelSign()}>Sign Up</a></li>
+          <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-success" onClick={() => this.handleModelLogin()}>Login</a></li>
           <Modal show={this.state.showSignup} 
-                 onHide={this.state.showLogin}>
-                <div className="form-sign-up" >
-                  <div className="sign-up">
-                  <h2>Sign Up</h2>
-		                <p>Please fill in this form to create an account!</p>
-                      <hr/>
-                      <input type="text" className="name" placeholder="First Name" name="firstName" onChange={(event) => this.handleChange(event)}/>
-                      <input type="text" className="name" placeholder="Last Name" name="lastName" onChange={(event) => this.handleChange(event)}/>
-                      <input type="text" className="email" placeholder="email"name="email" onChange={(event) => this.handleChange(event)}/>
-                      <input type="password" className="password" placeholder="Password" name="password" onChange={(event) => this.handleChange(event)}/>
-                      <input type="password" className="password" placeholder="Confirm Password" name="confirmPassword" onChange={(event) => this.handleChange(event)}/>
+                 onHide={() => this.handleModelSign()}>
+              <Modal.Header>
+                  <Modal.Title>Sign Up</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                  <div className="container">
+                      <div className="form-group">
+                          <input className="form-control" placeholder="Name" type="text" name="fullName" onChange={(event) => this.handleChange(event)}/>
+                      </div>
+                      <div className="form-group">
+                          <input type="email" className="form-control" placeholder="Email" name="email" onChange={(event) => this.handleChange(event)}/>
+                      </div>
+                      <div className="form-group">
+                          <input type="password" className="form-control" placeholder="Password" name="password" onChange={(event) => this.handleChange(event)}/>
+                      </div>
+                      <div className="form-group">
+                          <button className="btn btn-success rounded " onClick={() => {this.handleSignUp()}}>Signup</button>
+                      </div>
                   </div>
-                  <div className="button-container">
-                    <div className="btns">
-                      <button className="btn btn-primary"><i className="fab fa-facebook-f"></i>Sign up with <span>Facebook</span></button>
-                      <button className="btn btn-danger"><i className="fa fa-google"></i>Sign up with <span>Google</span></button>
-                    </div>  
-                    <button className="login-signup-button" onClick={() => {this.handleSubmit()}}>Signup</button>
+                  <div className="container">
+                      <div className="form-row">
+                          <div className="form-group col-md-6 col-sm-6">
+                              <a href='http://localhost:5000/auth/facebook' className="btn btn-md btn-primary rounded"><i className="fab fa-facebook-f"></i>&nbsp;&nbsp;Sign up with Facebook</a>
+                          </div>
+                          <div className="form-group col-md-6 col-sm-6">
+                              <a href='http://localhost:5000/auth/google' className="btn btn-md btn-danger rounded"><i className="fa fa-google"></i>&nbsp;&nbsp;Sign up with Google</a>
+                          </div>
+                      </div>
                   </div>
-                </div>         
+              </Modal.Body>
          </Modal> 
 
-         <Modal show={this.state.showLogin} onHide={ this.state.showSignup}>
-         <div className="form">
-                  <div className="sign-up">
-                      <span className="fa fa-user"></span>
-                      <input type="text" className="email" placeholder="email" name="email" onChange={(event) => this.handleChange(event)}/>
-                      <br></br>
-                      <span className="fa fa-lock"></span>
-                      <input type="password" className="password" placeholder="Password" name="password" onChange={(event) => this.handleChange(event)}/>
-                  </div>
-                  <div className="button-container">
-                    <div className="btns">
-                        <a href='http://localhost:5000/auth/facebook'><button className="btn btn-primary"><i className="fab fa-facebook-f"></i> Login with <span>Facebook</span></button></a>
-                        <a href='http://localhost:5000/auth/google'><button className="btn btn-danger"><i className="fa fa-google"></i> Login with <span>Google</span></button></a>
-                    </div>  
-                    <button className="login-signup-button" onClick={() => {this.handleLogin()}}>Login</button>
-                  </div>
-                </div>   
-          </Modal>
+         <Modal show={this.state.showLogin} onHide={() => this.handleModelLogin()}>
+             <Modal.Header>
+                 <Modal.Title>Sign Up</Modal.Title>
+             </Modal.Header>
+             <Modal.Body>
+                 <div className="container">
+                     <div className="input-group mb-2">
+                         <div className="input-group-prepend">
+                             <div className="input-group-text"><span className="fa fa-user"></span></div>
+                         </div>
+                         <input type="text" className="form-control" placeholder="email" name="email" onChange={(event) => this.handleChange(event)}/>
+                     </div>
+                     <div className="input-group mb-2">
+                         <div className="input-group-prepend">
+                             <div className="input-group-text"><span className="fa fa-lock"></span></div>
+                         </div>
+                         <input type="password" className="form-control" placeholder="Password" name="password" onChange={(event) => this.handleChange(event)}/>
+                     </div>
+                     <div className="form-group">
+                         <button className="btn btn-md btn-success rounded" onClick={() => {this.handleLogin()}}>Login</button>
+                     </div>
+                     <div className="form-row">
+                         <div className="form-group col-md-6 col-sm-6">
+                             <a href='http://localhost:5000/auth/facebook' className="btn btn-md btn-primary rounded"><i className="fab fa-facebook-f"></i> Login with Facebook</a>
+                         </div>
+                         <div className="form-group col-md-6 col-sm-6">
+                             <a href='http://localhost:5000/auth/google' className="btn btn-md btn-danger rounded"><i className="fa fa-google"></i> Login with Google</a>
+                         </div>
+                     </div>
+                 </div>
+             </Modal.Body>
+         </Modal>
       </>
     );
   }

@@ -40,7 +40,8 @@ router.post('/register', async (req, res) => {
                             // res.cookie('userID', `${results.data[1][0].u_id}`, {maxAge: 3600000});
                             // res.cookie('displayName', `${user.displayName}`, {maxAge: 3600000});
                             // res.redirect(`${FE_URL}/`);
-                            res.status(201).send(`${user.u_id}`);
+                            // res.status(201).send(`${user.u_id}`);
+                            res.status(201).send("User Created");
                         })
                         .catch(err => res.status(500).send(err.message))
                 }catch (err) {

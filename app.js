@@ -12,6 +12,7 @@ const passport = require('passport');
 // var usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth-routes');
 const profileRouter = require('./routes/profile-routes');
+const serviceRouter = require('./routes/service-routes');
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use(passport.session());
 // app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
+app.use('/service', serviceRouter);
 
 
 app.get('/', (req,res) => {

@@ -26,13 +26,6 @@ export default class Login extends Component {
   handleChange = event => {
     const { name, value } = event.target;
     this.setState({[name]: value});
-    // const confirmPassword = event.target.value;
-    // const password = event.target.value;
-    // if (confirmPassword === password) {
-    //   return this.setState({
-    //     [name]: value
-    //   });
-    // }
   }
 
   handleLogin = async () => {

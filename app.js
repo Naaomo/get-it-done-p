@@ -46,7 +46,7 @@ app.use(passport.session());
 // app.use('/users', usersRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
-app.use('/service', serviceRouter);
+app.use('/services', serviceRouter);
 
 
 app.get('/', (req,res) => {

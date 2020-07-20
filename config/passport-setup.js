@@ -3,6 +3,8 @@ const db = require("../model/helper");
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const FacebookStrategy = require('passport-facebook').Strategy;
+const LocalStrategy = require('passport-local').Strategy;
+const passportBcrypt  = require('bcrypt');
 
 passport.serializeUser((user, done) => {
     done(null, user.u_id);
@@ -11,7 +13,7 @@ passport.serializeUser((user, done) => {
 passport.deserializeUser((u_id, done) => {
     db(`SELECT * FROM users WHERE u_id=${u_id}`)
         .then(results => {
-            done(null, results.data[0]);
+            return done(null, results.data[0]);
         })
         .catch(err => {
             console.log(err);
@@ -62,7 +64,7 @@ passport.use(
     })
 );
 
-// TODO: Facebook Strategy
+// Facebook Strategy
 passport.use(
     new FacebookStrategy({
         //options for the google strategy
@@ -106,3 +108,25 @@ passport.use(
             });
     })
 );
+
+const authenticateUser = (email, password, done) => {
+    db(`SELECT * FROM users WHERE email='${email}';`)
+        .then(async results => {
+            console.log('FROM authenticateUser');
+            console.log(results);
+            if(results.data.length < 1) return done(null, false, { message: 'No user with that email'});
+            let user = results.data[0];
+            try{
+                if(await passportBcrypt.compare(password, user.password)){
+                    return done(null, user);
+                } else{
+                    return done(null, false, { message: 'Password incorrect'});
+                }
+            } catch (err){
+                return done(e);
+            }
+        })
+}
+
+// TODO: Local Strategy
+passport.use(new LocalStrategy({usernameField: 'email'}, authenticateUser));

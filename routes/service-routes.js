@@ -11,6 +11,7 @@ router.get('/', function (req, res, next) {
         .catch(err => res.status(500).send(err))
 });
 
+
 //Get all ServiceProviders
 router.get('/servicetype', function (req, res, next) {
     db(`SELECT * FROM serviceType;`)

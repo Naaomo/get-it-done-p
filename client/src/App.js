@@ -30,7 +30,6 @@ class App extends React.Component {
       
       const {referrer} = this.state;
       return (
-          <div>
                   <Router>
                       <nav className="py-3 navbar navbar-expand-lg sticky-top navbar-light" style={{top: 0}}>
                           <div className="container">
@@ -47,7 +46,7 @@ class App extends React.Component {
                               </div>
                           </div>
                       </nav>
-                      {referrer && <Route><Redirect to={referrer} /></Route>}
+                      {/* {referrer && <Route><Redirect to={referrer} /></Route>} */}
                       <Route exact path="/getService">
                         <GetService />
                       </Route>
@@ -58,6 +57,7 @@ class App extends React.Component {
                           <GiveService/>
                       </Route>
                 </Router>
+              
       );
   }
 }

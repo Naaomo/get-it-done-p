@@ -2,6 +2,7 @@ import React from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import './main.css';
+import { withRouter } from "react-router-dom";
 
 
 class Main extends React.Component {
@@ -42,7 +43,7 @@ class Main extends React.Component {
     this.setState({
       filteredService: filteredService,
     })
-    this.props.searchPage('/getService')
+    this.props.history.push('/getService')
   }
 
   handleService = (e) => {
@@ -103,4 +104,4 @@ class Main extends React.Component {
     }
 }
 
-export default Main;
+export default withRouter(Main);

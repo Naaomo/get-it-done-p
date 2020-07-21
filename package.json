@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "nodemon ./bin/www",
-    "migrate": "node model/database.js"
+    "migrate": "node model/database.js",
+    "migrate-update": "node model/update-migrations.js"
   },
   "dependencies": {
     "bcrypt": "^5.0.0",

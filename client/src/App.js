@@ -1,13 +1,12 @@
 import React from 'react';
 import './App.css';
-// import GiveService from './components/GiveService';
+import GiveService from './components/GiveService';
 import GetService from './components/GetService';
 import Login from './components/Login';
-// import Search from './components/Search';
 import Main from './components/Main';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { BrowserRouter as Router, Redirect, Switch, Route, Link, NavLink } from "react-router-dom";
-// import Demo from './components/calendar';
+import { BrowserRouter as Router, Redirect, Route, Link, NavLink } from "react-router-dom";
+
 
 class App extends React.Component {
   constructor(props) {
@@ -42,7 +41,7 @@ class App extends React.Component {
                               </button>
                               <div className="collapse navbar-collapse" id="navbar-content">
                                   <ul className="navbar-nav ml-auto">
-                                      {/*<li className="nav-item mx-1"><NavLink to="/">Home</NavLink></li>*/}
+                                    <li className="nav-item mx-1"><Link to="/services">Do-ers</Link></li>
                                       <Login />
                                   </ul>
                               </div>
@@ -55,15 +54,10 @@ class App extends React.Component {
                       <Route exact path="/">
                         <Main searchPage={(searchClicked) => this.searchPage(searchClicked)}/>
                       </Route>
+                      <Route path="/services">
+                          <GiveService/>
+                      </Route>
                 </Router>
-              
-              {/*</div>*/}
-              {/*<div>*/}
-              {/*  <Search />*/}
-              {/*</div>*/}
-              {/*<p>{pageCookie}</p>*/}
-              {/* <Demo /> */}
-          </div>
       );
   }
 }

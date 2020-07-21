@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
 });
 
 
-//Get all ServiceProviders
+//Get all ServiceTypes
 router.get('/servicetype', function (req, res, next) {
     db(`SELECT * FROM serviceType;`)
         .then(result => {
@@ -23,7 +23,7 @@ router.get('/servicetype', function (req, res, next) {
 });
 
 // Get ServiceProvider from Type and locality
-router.get('/servicetype/:serviceTypeID/:locality', function (req, res, next) {
+router.get('/servicebyidandloc/:serviceTypeID/:locality', function (req, res, next) {
     db(`select sp_id, price, loc_description, loc_lat, loc_lng, loc_locality, description, displayName as 'service_owner', profile_img from serviceProviders inner join users on serviceProviders.u_id = users.u_id where serviceProviders.st_id=${req.params.serviceTypeID} and loc_locality="${req.params.locality}";`)
         .then(result => {
             // console.log(result.data);

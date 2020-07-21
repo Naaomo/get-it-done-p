@@ -16,7 +16,7 @@ class Main extends React.Component {
 
   componentDidMount = () => {
     this.getServiceType();
-    // this.getServiceProviders();
+    this.getServiceProviders();
   }
 
   async getServiceType() {

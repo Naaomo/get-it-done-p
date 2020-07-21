@@ -42,6 +42,7 @@ class App extends React.Component {
                           </div>
                       </div>
                   </nav>
+                  <p>{pageCookie}</p>
                   <Switch>
                       <Route path="/">
                           <Main/>

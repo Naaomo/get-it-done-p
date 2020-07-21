@@ -44,13 +44,13 @@ class App extends React.Component {
                   </nav>
                   <p>{pageCookie}</p>
                   <Switch>
-                      <Route path="/">
+                      <Route exact path="/">
                           <Main/>
                       </Route>
-                      <Route path="/services">
+                      <Route exact path="/services">
                           <GiveService/>
                       </Route>
-                      <Route path="/getService">
+                      <Route exact path="/getService">
                           <GetService />
                       </Route>
                   </Switch>

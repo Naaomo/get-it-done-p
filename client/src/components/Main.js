@@ -11,8 +11,8 @@ class Main extends React.Component {
     this.state = {
       serviceType: [],
       filteredService: [],
-      isSubmited: "",
-      referrer: null,
+      isSubmited: ""
+      // referrer: null,
     }
   }
   navigateTo = () => {
@@ -45,9 +45,9 @@ class Main extends React.Component {
     filteredService.push(providersData);
     this.setState({
       filteredService: filteredService,
-      referrer: '/getService'
+      // referrer: '/getService'
     })
-    this.props.searchPage(this.state.referrer)
+    this.props.searchPage('/getService')
   }
   // handlePage = () => {
   //   console.log(this.state.isSubmited)

@@ -1,10 +1,5 @@
 import React from 'react';
 import './search.css';
-import cleaning from './icons/cleaning.png';
-import gardening from './icons/garden.png';
-import ironing from './icons/household-appliance.png';
-import plumbing from './icons/plumbing.png';
-import cooking from './icons/baking.png';
 import 'opencage-api-client';
 const OCD_API_KEY = process.env.REACT_APP_OCD_API_KEY;
 

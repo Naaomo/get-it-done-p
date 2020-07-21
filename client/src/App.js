@@ -25,41 +25,42 @@ class App extends React.Component {
           pageCookie = `Your page cookies are ${document.cookie}`;
       }
       return (
-          <div>
-              {/*<div className="login_container">*/}
-                  <Router>
-                      <nav className="py-3 navbar navbar-expand-lg sticky-top navbar-light" style={{top: 0}}>
-                          <div className="container">
-                              <a className="navbar-brand py-0" href="/"><span></span><img src="./images/logo.png"/></a>
-                              <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                      data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false"
-                                      aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span>
-                              </button>
-                              <div className="collapse navbar-collapse" id="navbar-content">
-                                  <ul className="navbar-nav ml-auto">
-                                      {/*<li className="nav-item mx-1"><NavLink to="/">Home</NavLink></li>*/}
-                                      <Login />
-                                  </ul>
-                              </div>
+          <Router>
+              <div>
+                  <nav className="py-3 navbar navbar-expand-lg sticky-top navbar-light" style={{top: 0}}>
+                      <div className="container">
+                          <Link to="/"><a className="navbar-brand py-0" href="/"><span></span><img src="./images/logo.png"/></a></Link>
+                          <button className="navbar-toggler" type="button" data-toggle="collapse"
+                                  data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false"
+                                  aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span>
+                          </button>
+                          <div className="collapse navbar-collapse" id="navbar-content">
+                              <ul className="navbar-nav ml-auto">
+                                  <li className="nav-item mx-1"><Link to="/services">Do-ers</Link></li>
+                                  <Login />
+                              </ul>
                           </div>
-                      </nav>
-                      <Switch>
-                          <Route path="/giveService">
-                              <GiveService />
-                          </Route>
-                          <Route path="/getService">
-                              <GetService />
-                          </Route>
-                      </Switch>
-                  </Router>
-              <Main/>
+                      </div>
+                  </nav>
+                  <Switch>
+                      <Route path="/">
+                          <Main/>
+                      </Route>
+                      <Route path="/services">
+                          <GiveService/>
+                      </Route>
+                      <Route path="/getService">
+                          <GetService />
+                      </Route>
+                  </Switch>
+              </div>
               {/*</div>*/}
               {/*<div>*/}
               {/*  <Search />*/}
               {/*</div>*/}
               {/*<p>{pageCookie}</p>*/}
               {/* <Demo /> */}
-          </div>
+          </Router>
       );
   }
 }

@@ -5,6 +5,40 @@ import './main.css';
 
 
 class Main extends React.Component {
+
+  constructor(props) {
+    super(props) 
+    this.state = {
+      serviceType: [],
+      filterService: ""
+    }
+  }
+
+  componentDidMount = () => {
+    this.getServiceType();
+    // this.getServiceProviders();
+  }
+
+  async getServiceType() {
+    const serviceList = await fetch('/services/servicetype');
+    const serviceData = await serviceList.json();
+    console.log(serviceData);
+    this.setState({
+      serviceType: serviceData
+    })
+  }
+  async getServiceProviders() {
+    const providerList = await fetch ('/services');
+    const providersData = await providerList.json();
+    console.log(providersData);
+  }
+  handleService = (e) => {
+    const { value } = e.target; 
+    this.setState({
+      filterService: value
+    })
+  }
+
     render() {
         return (
             <div className="main-section position-relative overflow-hidden p-3 p-md-5 m-md-3">
@@ -25,11 +59,11 @@ class Main extends React.Component {
                                         inputClassName="form-control rounded mb-2 mr-sm-2"
                                         onSelect={console.log}
                                     />
-                                    <select className="custom-select rounded mb-2 mr-sm-2">
-                                        <option>Cooking</option>
-                                        <option>Cleaning</option>
-                                        <option>Washing</option>
-                                        <option>Laundry</option>
+                                    <select className="custom-select rounded mb-2 mr-sm-2" onChange={(e) => this.handleService(e)}>
+                                      {this.state.serviceType.map(item => {
+                                        return <option key={item.st_id} value={item.service}>{item.service}</option>
+                                      }
+                                      )}
                                     </select>
                                     <button className="btn btn-success mb-2">
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
@@ -38,7 +72,9 @@ class Main extends React.Component {
                                                   d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
                                             <path fillRule="evenodd"
                                                   d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
-                                        </svg>&nbsp;&nbsp;Search</button>
+                                        </svg>
+                                        &nbsp;&nbsp;Search
+                                    </button>
                                 </div>
                             </div>
                         </div>

@@ -5,7 +5,12 @@ class GetService extends React.Component {
 
   render() {
     return (
-        <div className="container align-content-center">
+
+        <div>
+          <h2>Redirected!</h2>  
+          <h2>Redirected!</h2> 
+          <h2>Redirected!</h2> 
+          <h2>Redirected!</h2> 
 
         </div>
     );

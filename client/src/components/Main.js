@@ -2,6 +2,7 @@ import React from 'react';
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import './main.css';
+import { withRouter } from "react-router-dom";
 
 
 class Main extends React.Component {
@@ -10,16 +11,16 @@ class Main extends React.Component {
     super(props) 
     this.state = {
       serviceType: [],
-      filterService: ""
+      filteredService: [],
+      isSubmited: ""
     }
   }
 
   componentDidMount = () => {
     this.getServiceType();
-    this.getServiceProviders();
   }
 
-  async getServiceType() {
+  getServiceType = async () => {
     const serviceList = await fetch('/services/servicetype');
     const serviceData = await serviceList.json();
     console.log(serviceData);
@@ -27,11 +28,24 @@ class Main extends React.Component {
       serviceType: serviceData
     })
   }
-  async getServiceProviders() {
-    const providerList = await fetch ('/services');
-    const providersData = await providerList.json();
-    console.log(providersData);
+
+  handleSearch = () => {
+    // const providerList = await fetch (`/services/${service_and_location}`);
+    // const providersData = await providerList.json();
+    const { filteredService } = this.state;
+    const providersData = {
+      name : "Baba",
+      img : "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQd53UVQa5PwLX8dDlA3CkMOuPxY1H4uHPvbQ&usqp=CAU",
+      location: "Paseo de Extremadura Madrid",
+      price: "$30"
+    }
+    filteredService.push(providersData);
+    this.setState({
+      filteredService: filteredService,
+    })
+    this.props.history.push('/getService')
   }
+
   handleService = (e) => {
     const { value } = e.target; 
     this.setState({
@@ -40,6 +54,7 @@ class Main extends React.Component {
   }
 
     render() {
+
         return (
             <div className="main-section position-relative overflow-hidden p-3 p-md-5 m-md-3">
                 <div className="container d-flex flex-column">
@@ -65,7 +80,7 @@ class Main extends React.Component {
                                       }
                                       )}
                                     </select>
-                                    <button className="btn btn-success mb-2">
+                                    <button className="btn btn-success mb-2" onClick={() => {this.handleSearch()}}>
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd"
@@ -84,8 +99,9 @@ class Main extends React.Component {
                     </div>
                 </div>
             </div>
+
         );
     }
 }
 
-export default Main;
+export default withRouter(Main);

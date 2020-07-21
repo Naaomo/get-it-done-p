@@ -10,7 +10,7 @@ const con = mysql.createConnection({
     host: DB_HOST || "127.0.0.1",
     user: DB_USER || "root",
     password: DB_PASS,
-    database: DB_NAME || "get_it_done",
+    database: DB_NAME,
     multipleStatements: true
 });
 
@@ -31,7 +31,7 @@ con.connect(function(err) {
         console.log("Inserted values into `users` table");
     });
 
-    sql = "INSERT INTO serviceProviders (u_id, st_id, price, loc_description, loc_lat, loc_lng, loc_locality, description) VALUES (3, 3, 10, 'Orgle Rd, Accra, Ghana', '5.577895400000001', '-0.2305186', 'Okaikoi South', 'Will make your roses feel the love'), (3, 1, 30, 'Orgle Rd, Accra, Ghana', '5.577895400000001', '-0.2305186', 'Okaikoi South', 'I can make your floors sparkle'), (4, 3, 5, 'Palace St, Accra, Ghana', '5.581652399999999', '-0.2301826', 'Okaikoi South', 'I''m great at mowing lawns');"
+    sql = "INSERT INTO serviceProviders (u_id, st_id, price, loc_description, loc_lat, loc_lng, loc_locality, description) VALUES (2, 3, 10, 'Orgle Rd, Accra, Ghana', '5.577895400000001', '-0.2305186', 'Okaikoi South', 'Will make your roses feel the love'), (2, 1, 30, 'Orgle Rd, Accra, Ghana', '5.577895400000001', '-0.2305186', 'Okaikoi South', 'I can make your floors sparkle'), (3, 3, 5, 'Palace St, Accra, Ghana', '5.581652399999999', '-0.2301826', 'Okaikoi South', 'I''m great at mowing lawns');"
     con.query(sql, function (err, result) {
         if (err) throw err;
         console.log("Inserted values into `serviceProviders` table");

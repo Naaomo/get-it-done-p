@@ -13,12 +13,12 @@ class App extends React.Component {
     super(props)
 
     this.state = {
-      referrer: null
+      providers: []
     }
   };
-  searchPage = (page) => {
+  getProviders = (providersData) => {
     this.setState({
-      referrer: page
+      providers: providersData
     })
   }
 
@@ -28,7 +28,7 @@ class App extends React.Component {
           pageCookie = `Your page cookies are ${document.cookie}`;
       }
       
-      const {referrer} = this.state;
+      // const {referrer} = this.state;
       return (
                   <Router>
                       <nav className="py-3 navbar navbar-expand-lg sticky-top navbar-light" style={{top: 0}}>
@@ -46,12 +46,11 @@ class App extends React.Component {
                               </div>
                           </div>
                       </nav>
-                      {/* {referrer && <Route><Redirect to={referrer} /></Route>} */}
-                      <Route exact path="/getService">
-                        <GetService />
-                      </Route>
                       <Route exact path="/">
-                        <Main searchPage={(searchClicked) => this.searchPage(searchClicked)}/>
+                        <Main getProviders={(providersData) => this.getProviders(providersData)}/>
+                      </Route>
+                      <Route exact path="/getService">
+                        <GetService providersList = {this.state.providers} />
                       </Route>
                       <Route path="/services">
                           <GiveService/>

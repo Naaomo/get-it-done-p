@@ -12,7 +12,8 @@ class Main extends React.Component {
     this.state = {
       serviceType: [],
       filteredService: [],
-      isSubmited: ""
+      isSubmited: "",
+      locality: ""
     }
   }
 
@@ -29,20 +30,11 @@ class Main extends React.Component {
     })
   }
 
-  handleSearch = () => {
-    // const providerList = await fetch (`/services/${service_and_location}`);
-    // const providersData = await providerList.json();
-    const { filteredService } = this.state;
-    const providersData = {
-      name : "Baba",
-      img : "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQd53UVQa5PwLX8dDlA3CkMOuPxY1H4uHPvbQ&usqp=CAU",
-      location: "Paseo de Extremadura Madrid",
-      price: "$30"
-    }
-    filteredService.push(providersData);
-    this.setState({
-      filteredService: filteredService,
-    })
+  handleSearch = async () => {
+
+    const providerList = await fetch (`/services`);
+    const providersData = await providerList.json();
+    this.props.getProviders(providersData)
     this.props.history.push('/getService')
   }
 
@@ -53,8 +45,12 @@ class Main extends React.Component {
     })
   }
 
+  // geocodeByAddress('Mohali, Punjab')
+  // .then(results => getLatLng(results[0]))
+  // .then(({ lat, lng }) =>
+  //   console.log('Successfully got latitude and longitude', { lat, lng })
+  // );
     render() {
-
         return (
             <div className="main-section position-relative overflow-hidden p-3 p-md-5 m-md-3">
                 <div className="container d-flex flex-column">
@@ -72,7 +68,11 @@ class Main extends React.Component {
                                     <GooglePlacesAutocomplete
                                         apiKey="AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y"
                                         inputClassName="form-control rounded mb-2 mr-sm-2"
-                                        onSelect={console.log}
+                                        onSelect={({ place_id }) => (
+                                          
+                                          this.setState({ locality : place_id})
+                                        )}
+                                        
                                     />
                                     <select className="custom-select rounded mb-2 mr-sm-2" onChange={(e) => this.handleService(e)}>
                                       {this.state.serviceType.map(item => {

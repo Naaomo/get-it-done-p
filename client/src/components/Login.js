@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import './login.css';
+import {Link, Route} from "react-router-dom";
 
 export default class Login extends Component {
   constructor(props) {
@@ -70,7 +71,6 @@ export default class Login extends Component {
     })
     .catch(err => console.log(err));
     this.handleModelLogin()
-      //reload document upon login
     document.location.reload();
   }
 
@@ -102,23 +102,44 @@ export default class Login extends Component {
       this.setState({
           username: ""
       })
-      alert("Logged out!")
+      document.location.reload();
+  }
+
+  handleRedirectToService = (history) => {
+      if(this.state.username !== ""){
+          history.push("/services");
+      }else{
+          this.handleModelSign();
+      }
   }
 
   render() {
 
     return (
       <>
+          <li className="nav-item mx-1">
+              <Route render={({ history}) => (
+                  <p
+                      onClick={() => { this.handleRedirectToService(history) }}
+                  >
+                    Do-ers
+                  </p>
+              )} />
+          </li>
           {this.state.username !== "" ? (
               <>
-                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-light" >Hello {this.state.username}!</a></li>
-                  <li className="nav-item mr-2 pt-1"><a className="rounded px-3 btn btn-md btn-danger" onClick={() => this.handleLogout()}>Log out</a></li>
+                  <li className="nav-item mx-2 pt-1">
+                      <Link to="/profile">
+                          <a className="rounded px-3 btn btn-md btn-light" >Hello {this.state.username}!</a>
+                      </Link>
+                  </li>
+                  <li className="nav-item mr-2 pt-2"><a className="rounded px-3 btn btn-md btn-danger" onClick={() => this.handleLogout()}>Log out</a></li>
               </>
 
           ) :(
               <>
-                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelSign()}>Sign Up</a></li>
-                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelLogin()}>Login</a></li>
+                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-success" onClick={() => this.handleModelSign()}>Sign Up</a></li>
+                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-success" onClick={() => this.handleModelLogin()}>Login</a></li>
               </>
           )}
           <Modal show={this.state.showSignup} 

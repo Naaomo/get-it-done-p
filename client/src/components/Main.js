@@ -12,12 +12,8 @@ class Main extends React.Component {
     this.state = {
       serviceType: [],
       filteredService: [],
-<<<<<<< HEAD
-      isSubmitted: ""
-=======
-      isSubmited: "",
+      isSubmitted: "",
       locality: ""
->>>>>>> upstream/master
     }
   }
 
@@ -50,15 +46,12 @@ class Main extends React.Component {
     })
   }
 
-<<<<<<< HEAD
-    //TODO list of chores aren't working anymore?
-=======
   // geocodeByAddress('Mohali, Punjab')
   // .then(results => getLatLng(results[0]))
   // .then(({ lat, lng }) =>
   //   console.log('Successfully got latitude and longitude', { lat, lng })
   // );
->>>>>>> upstream/master
+
     render() {
         return (
             <div className="main-section position-relative overflow-hidden p-3 p-md-5 m-md-3">

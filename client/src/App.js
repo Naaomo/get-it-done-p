@@ -5,6 +5,7 @@ import GetService from './components/GetService';
 import Login from './components/Login';
 import Main from './components/Main';
 import MapView from "./components/MapView";
+import Profile from "./components/Profile"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { BrowserRouter as Router, Redirect, Route, Link, NavLink } from "react-router-dom";
 
@@ -46,27 +47,10 @@ class App extends React.Component {
     }
 
   render() {
-<<<<<<< HEAD
-      const {referrer} = this.state;
-      return (
-                  <Router>
-                      <nav className="py-3 navbar navbar-expand-lg sticky-top navbar-light" style={{top: 0}}>
-                          <div className="container">
-                              <Link className="navbar-brand py-0" to="/"><span></span><img src="./images/logo.png"/></Link>
-                              <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                      data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false"
-                                      aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span>
-                              </button>
-                              <div className="collapse navbar-collapse" id="navbar-content">
-                                  <ul className="navbar-nav ml-auto">
-                                    <li className="nav-item mx-2 pt-3"><Link to="/services">Become a do-er!</Link></li>
-                                      <Login />
-                                  </ul>
-                              </div>
-=======
       let pageCookie = 'This is the frontend'
       if(document.cookie){
           pageCookie = `Your page cookies are ${document.cookie}`;
+          console.log(document.cookie)
       }
       
       // const {referrer} = this.state;
@@ -82,10 +66,8 @@ class App extends React.Component {
                           </button>
                           <div className="collapse navbar-collapse" id="navbar-content">
                               <ul className="navbar-nav ml-auto">
-                                  <li className="nav-item mx-1"><Link to="/services">Do-ers</Link></li>
-                                  <Login />
+                                  <Login cookieData={this.translateCookie()}/>
                               </ul>
->>>>>>> upstream/master
                           </div>
                       </div>
                   </nav>
@@ -96,10 +78,13 @@ class App extends React.Component {
                       <GetService providersList = {this.state.providers} />
                   </Route>
                   <Route exact path="/services">
-                      <GiveService/>
+                      <GiveServiceNaomi/>
                   </Route>
                   <Route exact path="/map">
                       <MapView />
+                  </Route>
+                  <Route exact path="/profile">
+                      <Profile cookieData={this.translateCookie()}/>
                   </Route>
               </Router>
           </div>

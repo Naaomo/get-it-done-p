@@ -10,7 +10,9 @@ class MapView extends React.Component{
         super(props);
         this.state = {
             serviceLocations: [],
-            locality: ""
+            locality: "",
+            startLat: "",
+            startLng: ""
         }
     }
 

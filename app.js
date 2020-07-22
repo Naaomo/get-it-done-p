@@ -50,7 +50,6 @@ app.use('/profile', profileRouter);
 app.use('/services', serviceRouter);
 app.use('/users', usersRouter);
 
-
 app.get('/', (req,res) => {
     res.render('home');
     // res.send("Welcome to the backend");

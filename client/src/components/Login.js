@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
+import './login.css';
 
 export default class Login extends Component {
   constructor(props) {
@@ -11,8 +12,30 @@ export default class Login extends Component {
       fullName: "",
       email: "",
       password: "",
-      errorMessage: ""
+      errorMessage: "",
+        username: ""
     };
+  }
+
+  componentDidMount() {
+      let pageCookie = ''
+      let cookieArr = [];
+      let cookieData = {};
+      if(document.cookie){
+          // pageCookie = document.cookie}`;
+          //userID=2; displayName=Naomi
+          cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
+
+          cookieArr.forEach((e,i) => {
+              var data = e.split('=')
+              cookieData[data[0]] = data[1];
+          })
+
+          this.setState({
+              username: cookieData.displayName
+          })
+          // console.log(cookieData)
+      }
   }
 
   handleModelSign = () => {
@@ -47,6 +70,7 @@ export default class Login extends Component {
     })
     .catch(err => console.log(err));
     this.handleModelLogin()
+      //reload document upon login
     document.location.reload();
   }
 
@@ -73,11 +97,30 @@ export default class Login extends Component {
       this.handleModelLogin();
   }
 
+  handleLogout = () => {
+      document.cookie = document.cookie + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
+      this.setState({
+          username: ""
+      })
+      alert("Logged out!")
+  }
+
   render() {
+
     return (
       <>
-          <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-success" onClick={() => this.handleModelSign()}>Sign Up</a></li>
-          <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-success" onClick={() => this.handleModelLogin()}>Login</a></li>
+          {this.state.username !== "" ? (
+              <>
+                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-light" >Hello {this.state.username}!</a></li>
+                  <li className="nav-item mr-2 pt-1"><a className="rounded px-3 btn btn-md btn-danger" onClick={() => this.handleLogout()}>Log out</a></li>
+              </>
+
+          ) :(
+              <>
+                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelSign()}>Sign Up</a></li>
+                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelLogin()}>Login</a></li>
+              </>
+          )}
           <Modal show={this.state.showSignup} 
                  onHide={() => this.handleModelSign()}>
               <Modal.Header>

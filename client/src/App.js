@@ -46,9 +46,9 @@ class App extends React.Component {
     }
 
   render() {
-<<<<<<< HEAD
       const {referrer} = this.state;
       return (
+        <div>
                   <Router>
                       <nav className="py-3 navbar navbar-expand-lg sticky-top navbar-light" style={{top: 0}}>
                           <div className="container">
@@ -63,32 +63,9 @@ class App extends React.Component {
                                       <Login />
                                   </ul>
                               </div>
-=======
-      let pageCookie = 'This is the frontend'
-      if(document.cookie){
-          pageCookie = `Your page cookies are ${document.cookie}`;
-      }
-      
-      // const {referrer} = this.state;
-      return (
-          <div>
-              <Router>
-                  <nav className="py-3 navbar navbar-expand-lg sticky-top navbar-light" style={{top: 0}}>
-                      <div className="container">
-                          <Link className="navbar-brand py-0" to="/"><span></span><img src="./images/logo.png"/></Link>
-                          <button className="navbar-toggler" type="button" data-toggle="collapse"
-                                  data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false"
-                                  aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span>
-                          </button>
-                          <div className="collapse navbar-collapse" id="navbar-content">
-                              <ul className="navbar-nav ml-auto">
-                                  <li className="nav-item mx-1"><Link to="/services">Do-ers</Link></li>
-                                  <Login />
-                              </ul>
->>>>>>> upstream/master
                           </div>
-                      </div>
-                  </nav>
+                
+                      </nav>
                   <Route exact path="/">
                       <Main getProviders={(providersData) => this.getProviders(providersData)}/>
                   </Route>
@@ -96,14 +73,14 @@ class App extends React.Component {
                       <GetService providersList = {this.state.providers} />
                   </Route>
                   <Route exact path="/services">
-                      <GiveService/>
+                      <GiveServiceNaomi/>
                   </Route>
                   <Route exact path="/map">
                       <MapView />
                   </Route>
               </Router>
           </div>
-      );
+    );
   }
 }
 

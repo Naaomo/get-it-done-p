@@ -33,3 +33,6 @@ span {
   display: flex;
   padding-top: 5px;
 }
+.alert-close {
+  display: flex;
+}

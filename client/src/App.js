@@ -47,7 +47,15 @@ class App extends React.Component {
     }
 
   render() {
+<<<<<<< HEAD
       const {referrer} = this.state;
+=======
+      let pageCookie = 'This is the frontend'
+      if(document.cookie){
+          pageCookie = `Your page cookies are ${document.cookie}`;
+      }
+      
+>>>>>>> providers profile added
       return (
         <div>
                   <Router>

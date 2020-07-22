@@ -8,7 +8,7 @@ class GiveService extends React.Component {
         this.state = {
             serviceType: [],
             filteredService: [],
-            isSubmited: "",
+            isSubmitted: "",
             errors: {}
         }
     }
@@ -39,10 +39,32 @@ class GiveService extends React.Component {
         })
     }
 
+    translateCookie = () => {
+        let pageCookie = ''
+        let cookieArr = [];
+        let cookieData = {};
+        if(document.cookie){
+            // pageCookie = document.cookie}`;
+            //userID=2; displayName=Naomi
+            cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
 
+            cookieArr.forEach((e,i) => {
+                var data = e.split('=')
+                cookieData[data[0]] = data[1];
+            })
 
+            return cookieData
+            // console.log(cookieData)
+        }else{
+            return false;
+        }
+    }
+
+//TODO change the link(become a do-er) into return to homepage
+//Submission not working, this.function.translatecookie is not a function
+//duplicated function
+// clear form upon submit
     handleSubmit = () => {
-        console.log(this.translateCookie())
 
         var err = {}
         if(!this.state.inputAddress){
@@ -80,7 +102,8 @@ class GiveService extends React.Component {
           console.log(formData)
         }else{
             this.setState({
-                errors : err
+                errors : err,
+                // isSubmitted: ""
             })
         }
     }
@@ -141,13 +164,25 @@ class GiveService extends React.Component {
                     )}
                 </div>
                 {/*TODO FIX PRICE*/}
-                <div className="form-group">
-                    <label htmlFor="inputZip">Price</label>
-                    <input type="text" className="form-control" id="inputPrice" onChange={(e) => this.handleInput(e)}/>
-                    {this.state.errors.inputPriceErr && (
-                        <p>{this.state.errors.inputPriceErr}</p>
-                    )}
+                <div className="input-group mb-3">
+                    <div className="input-group-prepend">
+                        <span className="input-group-text">$</span>
+                    </div>
+                    <input type="text" className="form-control"  id="inputPrice" onChange={(e) => this.handleInput(e)}/>
+                        {this.state.errors.inputPriceErr && (
+                            <p>{this.state.errors.inputPriceErr}</p>
+                        )}
+                        <div className="input-group-append">
+                            <span className="input-group-text">.00</span>
+                        </div>
                 </div>
+                {/*<div className="form-group">*/}
+                {/*    <label htmlFor="inputZip">Price</label>*/}
+                {/*    <input type="text" className="form-control" id="inputPrice" onChange={(e) => this.handleInput(e)}/>*/}
+                {/*    {this.state.errors.inputPriceErr && (*/}
+                {/*        <p>{this.state.errors.inputPriceErr}</p>*/}
+                {/*    )}*/}
+                {/*</div>*/}
                 <button type="submit" className="btn btn-success" onClick={() => this.handleSubmit()}>Submit</button>
             </div>
         );

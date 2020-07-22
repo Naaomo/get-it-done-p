@@ -22,12 +22,29 @@ class App extends React.Component {
     })
   }
 
+  //repeated function?
+    translateCookie = () => {
+        let pageCookie = ''
+        let cookieArr = [];
+        let cookieData = {};
+        if(document.cookie){
+            // pageCookie = document.cookie}`;
+            //userID=2; displayName=Naomi
+            cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
+
+            cookieArr.forEach((e,i) => {
+                var data = e.split('=')
+                cookieData[data[0]] = data[1];
+            })
+
+            return cookieData
+            // console.log(cookieData)
+        }else{
+            return false;
+        }
+    }
+
   render() {
-      let pageCookie = 'This is the frontend'
-      if(document.cookie){
-          pageCookie = `Your page cookies are ${document.cookie}`;
-      }
-      
       const {referrer} = this.state;
       return (
                   <Router>
@@ -40,7 +57,7 @@ class App extends React.Component {
                               </button>
                               <div className="collapse navbar-collapse" id="navbar-content">
                                   <ul className="navbar-nav ml-auto">
-                                    <li className="nav-item mx-1"><Link to="/services">Do-ers</Link></li>
+                                    <li className="nav-item mx-2 pt-3"><Link to="/services">Become a do-er!</Link></li>
                                       <Login />
                                   </ul>
                               </div>

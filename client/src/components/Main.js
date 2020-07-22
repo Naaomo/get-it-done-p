@@ -12,13 +12,14 @@ class Main extends React.Component {
     this.state = {
       serviceType: [],
       filteredService: [],
-      isSubmited: ""
+      isSubmitted: ""
     }
   }
 
   componentDidMount = () => {
     this.getServiceType();
   }
+
 
   getServiceType = async () => {
     const serviceList = await fetch('/services/servicetype');
@@ -53,6 +54,7 @@ class Main extends React.Component {
     })
   }
 
+    //TODO list of chores aren't working anymore?
     render() {
 
         return (

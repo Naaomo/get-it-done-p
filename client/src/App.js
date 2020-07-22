@@ -29,7 +29,6 @@ class App extends React.Component {
           pageCookie = `Your page cookies are ${document.cookie}`;
       }
       
-      // const {referrer} = this.state;
       return (
           <div>
               <Router>

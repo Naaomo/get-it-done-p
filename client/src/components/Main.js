@@ -64,7 +64,6 @@ class Main extends React.Component {
                             <p>Find a Do-er now</p>
                             <div>
                                 <div className="input-group mb-3">
-                                    {/*<input type="text" className="form-control rounded mb-2 mr-sm-2" placeholder="Location" />*/}
                                     <GooglePlacesAutocomplete
                                         apiKey="AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y"
                                         inputClassName="form-control rounded mb-2 mr-sm-2"

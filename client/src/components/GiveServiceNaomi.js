@@ -1,7 +1,7 @@
 import React from 'react';
 
 
-class GiveService extends React.Component {
+class GiveServiceNaomi extends React.Component {
 
     constructor(props) {
         super(props)
@@ -189,4 +189,4 @@ class GiveService extends React.Component {
     }
 }
 
-export default GiveService;
+export default GiveServiceNaomi;

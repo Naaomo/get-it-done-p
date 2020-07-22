@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
-import GiveService from './components/GiveService';
-import GetServiceNaomi from './components/GetServiceNaomi';
+import GiveServiceNaomi from './components/GiveServiceNaomi';
+import GetService from './components/GetService';
 import Login from './components/Login';
 import Main from './components/Main';
 import MapView from "./components/MapView";

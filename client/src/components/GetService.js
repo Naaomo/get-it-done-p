@@ -1,7 +1,7 @@
 import React from 'react';
 import './getService.css'
 import plant from './plant.png'
-class GetServiceNaomi extends React.Component {
+class GetService extends React.Component {
 
   constructor(props) {
     super(props)
@@ -54,4 +54,4 @@ class GetServiceNaomi extends React.Component {
   }
 }
 
-export default GetServiceNaomi;
+export default GetService;

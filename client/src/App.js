@@ -52,7 +52,7 @@ class App extends React.Component {
                       <Route exact path="/getService">
                         <GetService providersList = {this.state.providers} />
                       </Route>
-                      <Route path="/services">
+                      <Route exact path="/services">
                           <GiveService/>
                       </Route>
                 </Router>

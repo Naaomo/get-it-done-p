@@ -30,7 +30,7 @@ router.get('/servicebyidandloc/:serviceTypeID/:placeID', async function (req, re
     let placeDetails = {
         locality: json.result.address_components[1].long_name,
     }
-    db(`select sp_id, price, loc_description, loc_lat, loc_lng, loc_locality, description, displayName as 'service_owner', profile_img from serviceProviders inner join users on serviceProviders.u_id = users.u_id where serviceProviders.st_id=${req.params.serviceTypeID} and loc_locality="${req.params.locality}";`)
+    db(`select sp_id, price, loc_description, loc_lat, loc_lng, loc_locality, description, displayName as 'service_owner', profile_img from serviceProviders inner join users on serviceProviders.u_id = users.u_id where serviceProviders.st_id=${req.params.serviceTypeID} and loc_locality="${placeDetails.locality}";`)
         .then(result => {
             // console.log(result.data);
             res.status(200).send(result.data);

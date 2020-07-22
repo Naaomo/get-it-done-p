@@ -12,6 +12,16 @@ router.get('/', function (req, res, next) {
         .catch(err => res.status(500).send(err))
 });
 
+//GET ID'S Service info
+//Whenever this is here, the ones below all get ignored?
+// router.get('/:id', function (req, res, next) {
+//     db(`SELECT * FROM serviceProviders WHERE u_id = '${req.params.id}';`)
+//         .then(result => {
+//             res.send(result.data)
+//         })
+//         .catch(err => res.status(500).send(err))
+// });
+
 
 //Get all ServiceTypes
 router.get('/servicetype', function (req, res, next) {

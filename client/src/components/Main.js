@@ -21,6 +21,7 @@ class Main extends React.Component {
     this.getServiceType();
   }
 
+
   getServiceType = async () => {
     const serviceList = await fetch('/services/servicetype');
     const serviceData = await serviceList.json();

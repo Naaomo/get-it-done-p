@@ -1,0 +1,15 @@
+.btn-light{
+    background:pink !important;
+    color: white !important;
+}
+
+.btn-danger{
+    background: #d73f3f !important;
+    color: white !important;
+}
+
+.btn-info{
+    background: lightskyblue !important;
+    border: lightskyblue !important;
+    color: white !important;
+}

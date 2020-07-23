@@ -48,7 +48,11 @@ class GetService extends React.Component {
         <div className="main-container">
         <Alert show={this.state.show} variant="success">
           <div className="alert-close">
+<<<<<<< HEAD
             <p>Your booking request has been sent to the do-er.</p>
+=======
+            <p>{this.state.time} on {this.state.date} is booked.</p>
+>>>>>>> 9f990dd0f6f106879a6c6e46b030915b17aa1c49
             <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
           </div>
         </Alert>

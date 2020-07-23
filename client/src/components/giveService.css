@@ -1,0 +1,25 @@
+.upload-img {
+  width: 150px;
+  height: 150px;
+  border-radius: 5px;
+  margin: 10px;
+
+}
+.preview-container {
+  display: flex;
+}
+.x-button-container {
+  position: relative;
+}
+.x-button {
+  width: 20px;
+  height: 20px;
+  padding: 0;
+  position: absolute;
+  left: 139px;
+  top: 11px;
+  margin: 0;
+  border: none;
+  background-color: transparent;
+}
+

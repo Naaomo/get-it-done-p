@@ -1,12 +1,7 @@
 import React from 'react';
 import './getService.css'
-<<<<<<< HEAD
-import plant from './plant.png'
-
-=======
 import plant from './icons/plant.png'
 import { Alert, Button, Modal } from 'react-bootstrap';
->>>>>>> providers profile added
 
 class GetService extends React.Component {
 
@@ -53,7 +48,7 @@ class GetService extends React.Component {
         <div className="main-container">
         <Alert show={this.state.show} variant="success">
           <div className="alert-close">
-            <p>{this.state.time} on {this.state.date} is booked.</p>
+            <p>Your booking request has been sent to the do-er.</p>
             <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
           </div>
         </Alert>

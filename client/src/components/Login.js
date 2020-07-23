@@ -156,7 +156,7 @@ export default class Login extends Component {
 
          <Modal show={this.state.showLogin} onHide={() => this.handleModelLogin()}>
              <Modal.Header>
-                 <Modal.Title>Sign Up</Modal.Title>
+                 <Modal.Title>Login</Modal.Title>
              </Modal.Header>
              <Modal.Body>
                  <div className="container">

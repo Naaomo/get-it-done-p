@@ -30,7 +30,7 @@ router.get('/servicebyidandloc/:serviceTypeID/:placeID', async function (req, re
     let placeDetails = {
         locality: json.result.address_components[1].long_name,
     }
-    db(`select sp_id, price, loc_description, loc_lat, loc_lng, loc_locality, description, displayName as 'service_owner', profile_img from serviceProviders inner join users on serviceProviders.u_id = users.u_id where serviceProviders.st_id=${req.params.serviceTypeID} and loc_locality="${placeDetails.locality}";`)
+    db(`select sp_id, service as 'service_type', price, loc_description, loc_lat, loc_lng, loc_locality, description, serviceProviders.u_id as 'service_owner_id', displayName as 'service_owner', profile_img from (serviceProviders inner join users on serviceProviders.u_id = users.u_id) inner join serviceType on serviceProviders.st_id = serviceType.st_id where serviceProviders.st_id=${req.params.serviceTypeID} and loc_locality="${placeDetails.locality}";`)
         .then(result => {
             // console.log(result.data);
             res.status(200).send(result.data);
@@ -56,6 +56,23 @@ router.post('/add', async function (req, res, next) {
         })
         .catch(err => res.status(500).send(err))
     // res.send(placeDetails);
+});
+
+router.post('/book', function (req, res){
+    db(`insert into orders(u_id, sp_id, book_date, book_time) values(${req.body.u_id},${req.body.sp_id}, date("${req.body.book_date}"), time("${req.body.book_time}"));`)
+        .then(result => {
+            console.log(result.data);
+            res.status(201).send(result.data);
+        })
+        .catch(err => res.status(500).send(err))
+});
+
+router.get('/booking-history/:id', function(req, res){
+    db(`select serviceType.st_id as 'st_id', displayName as 'service_owner', service, description, loc_description, price, book_time, book_date, date(order_date) as 'history_date', time(order_date) as 'history_time' from (orders inner join serviceProviders on orders.sp_id = serviceProviders.sp_id) inner join users on serviceProviders.u_id = users.u_id inner join serviceType on serviceProviders.st_id = serviceType.st_id where orders.u_id =${req.params.id};`)
+        .then(result => {
+            res.status(200).send(result.data);
+        })
+        .catch(err => res.status(500).send(err))
 });
 
 module.exports = router;

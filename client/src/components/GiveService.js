@@ -1,6 +1,6 @@
 import React from 'react';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
-
+import './giveService.css';
 
 class GiveService extends React.Component {
     constructor(props) {
@@ -13,7 +13,8 @@ class GiveService extends React.Component {
             service_id: "1",
             price: null,
             contact: null,
-            description: null
+            description: null,
+            images: [],
         }
     }
     componentDidMount = () => {
@@ -59,7 +60,8 @@ class GiveService extends React.Component {
             price: this.state.price,
             description: this.state.description,
             contact: this.state.contact,
-            place_id: this.state.place_id}));
+            place_id: this.state.place_id
+            }));
         let response = await fetch("/services/add", {
             method: "POST",
             headers: {
@@ -78,8 +80,24 @@ class GiveService extends React.Component {
         let json = await response.json();
         console.log(json);
     }
-
+    uploadImages = (e) => {
+      console.log(e.target.files[0])
+      const {images} = this.state;
+      images.push(URL.createObjectURL(e.target.files[0]))
+      this.setState({
+        images: images
+      })
+    }
+    deleteImg = (e) => {
+      const del = e.target.value;
+      const images  = this.state.images
+      images.splice(del, 1)
+      this.setState({
+        images : images
+      })
+    }
     render() {
+     
         return (
             <div className="container align-content-center">
                 <div className="form-row">
@@ -111,6 +129,24 @@ class GiveService extends React.Component {
                         <input className="form-control" type="tel" name="contact" onChange={(e) => this.handleInputChange(e)}/>
                     </div>
                 </div>
+                <div class="input-group mb-3">
+                  <div class="custom-file">
+                    <input type="file" onChange={(e) => {this.uploadImages(e)}}class="custom-file-input" id="inputGroupFile02"/>
+                    <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                  </div>
+                </div>
+                    <div className="preview-container">
+                       { this.state.images.map((item, index) => {
+                        
+                            return (
+                              <div className="x-button-container">
+                                <img src={item} key={index} value={index} className="upload-img"/>
+                                <button value={index} className="x-button" onClick={(e)=> this.deleteImg(e)}>X</button>
+                              </div>
+                            )
+                        }) 
+                        }
+                    </div>
                 <div className="form-group">
                     <label htmlFor="inputAddress">Description</label>
                     <textarea className="form-control" name="description" placeholder="Give your customers some details about your service" rows="5" onChange={(e) => this.handleInputChange(e)}/>

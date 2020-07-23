@@ -13,8 +13,7 @@ router.get('/:id',  (req, res) => {
 
 // Get's all services offered by a person
 router.get('/services/:id',  (req, res) => {
-    db(`
-            select 
+    db(`select 
             serviceType.st_id as 'st_id', 
             service, description, price, loc_description 
             from users 

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import './profile.css';
-//TODO redirect over here when click on the hello button
+
 class Profile extends Component {
     constructor(props) {
         super(props)
@@ -9,11 +9,6 @@ class Profile extends Component {
             userData: this.props.cookieData
         }
     }
-    /*description: "Will make your roses feel the love"
-    loc_description: "Orgle Rd, Accra, Ghana"
-    price: 10
-    service: "Gardening"
-    st_id: 3*/
 
     componentDidMount() {
         console.log(this.state.userData)
@@ -22,6 +17,7 @@ class Profile extends Component {
                 .then(response => response.json())
                 .then(json => {
                     console.log(json)
+                    //this is not working???
                     this.setState({profileData: json})
                 })
         }
@@ -29,37 +25,82 @@ class Profile extends Component {
             await get()
         })()
     }
-
+//is this the same as the component did mount?
     get = async() => {
-        const profileData = await fetch (`/services/${this.translateCookie().userID}`);
+        // const profileData = await fetch (`/services/${this.translateCookie().userID}`);
+        const profileData = await fetch (`/services/${this.state.userData.userID}`);
         console.log(profileData)
     }
 
     render() {
         return (
-            <div>
-                {/*this.state.userdata.whatevercookieimg*/}
-                <img src="https://i.pinimg.com/280x280_RS/be/3c/fc/be3cfcf670b49e279b59aa21257596ee.jpg" alt=""/>
-                <div className="card">
-                    <div className="card-body">
-                        <h5 className="card-title">
-                            Hello, {this.state.userData.displayName}
-                        </h5>
+            <div className="container">
+                <div className="container text-center">
+                    <img src= {this.state.userData.profile_img} className="img-fluid"/>
+                    {/*Being able to update image*/}
+                    <h3>Welcome back, {this.state.userData.displayName}!</h3>
+                </div>
+                <span>
+                <div className="col-5 float-left">
+                    <div className="card">
+                        <div className="card-header">
+                            Services you're providing
+                        </div>
+                        <ul className="list-group list-group-flush">
+                            <li className="list-group-item">
+                                <div className="col">
+                                    <div className="card border-light">
+                                        {this.state.profileData.map((e,i) => {
+                                            return (
+                                                <div className="card">
+                                                    <h5 className="card-header btn-info">{e.service}</h5>
+                                                    <div className="card-body">
+                                                        <p className="card-title">{e.loc_description}</p>
+                                                        <p className="card-text">{e.description}</p>
+                                                        <p className="card-text">${e.price}</p>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
                     </div>
                 </div>
-                {/*not a function???*/}
-                {this.state.profileData.map((e,i) => {
-                    return (
-                        <div className="card">
-                            <div className="card-body">
-                                <h5 className="card-title">{e.service}</h5>
-                                <p className="card-text">{e.description}</p>
-                                <p className="card-text">{e.loc_description}</p>
-                                <p className="card-text">{e.price}</p>
-                            </div>
+
+            {/*  TODO  Booked services, move to top later*/}
+
+                <div className="col-5 float-right">
+                    <div className="card">
+                        <div className="card-header">
+                            Services you booked
                         </div>
-                    )
-                })}
+                        <ul className="list-group list-group-flush">
+                            <li className="list-group-item">
+                                <div className="col">
+                                    <div className="card border-light">
+                                        {this.state.profileData.map((e,i) => {
+                                            return (
+                                                <div className="card">
+                                                    <h5 className="card-header btn-info">{e.service}</h5>
+                                                    <div className="card-body">
+                                                        <p className="card-title">{e.loc_description}</p>
+                                                        <p className="card-text">{e.description}</p>
+
+                                                        <p className="card-text">${e.price}</p>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                    </span>
+            {/*    end div*/}
             </div>
         );
     }

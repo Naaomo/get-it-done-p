@@ -41,6 +41,7 @@ router.get('/servicebyidandloc/:serviceTypeID/:placeID', async function (req, re
 router.post('/add', async function (req, res, next) {
     const response = await fetch(`https://maps.googleapis.com/maps/api/place/details/json?place_id=${req.body.place_id}&fields=geometry,formatted_address,address_component&key=${process.env.GOOGLE_PLACES_KEY}`);
     const json = await response.json();
+    console.log(json)
     let placeDetails = {
         locality: json.result.address_components[1].long_name,
         full_address: json.result.formatted_address,
@@ -50,7 +51,7 @@ router.post('/add', async function (req, res, next) {
     // console.log(placeDetails);
     db(`insert into serviceProviders(u_id,st_id,price,description,loc_description,loc_lat,loc_lng,loc_locality) values(${req.body.u_id}, ${req.body.st_id}, ${req.body.price}, "${req.body.description}", '${placeDetails.full_address}', '${placeDetails.lat}', '${placeDetails.lng}', '${placeDetails.locality}');`)
         .then(result => {
-            // console.log(result.data);
+            console.log(result.data);
             res.status(200).send(result.data);
         })
         .catch(err => res.status(500).send(err))

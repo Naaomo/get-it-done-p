@@ -46,11 +46,6 @@ class Main extends React.Component {
     })
   }
 
-  // geocodeByAddress('Mohali, Punjab')
-  // .then(results => getLatLng(results[0]))
-  // .then(({ lat, lng }) =>
-  //   console.log('Successfully got latitude and longitude', { lat, lng })
-  // );
 
     render() {
         return (

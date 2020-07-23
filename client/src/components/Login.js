@@ -14,7 +14,8 @@ export default class Login extends Component {
       email: "",
       password: "",
       errorMessage: "",
-        username: ""
+        username: "",
+        profileimg:"",
     };
   }
 
@@ -24,16 +25,17 @@ export default class Login extends Component {
       let cookieData = {};
       if(document.cookie){
           // pageCookie = document.cookie}`;
-          //userID=2; displayName=Naomi
+          //userID=2; displayName=Naomi; profile_img
           cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
 
           cookieArr.forEach((e,i) => {
               var data = e.split('=')
-              cookieData[data[0]] = data[1];
+              cookieData[data[0].trim()] = decodeURIComponent(data[1]);
           })
 
           this.setState({
-              username: cookieData.displayName
+              username: cookieData.displayName,
+              profileimg: cookieData.profile_img
           })
           // console.log(cookieData)
       }
@@ -118,20 +120,31 @@ export default class Login extends Component {
 
     return (
       <>
+          {/*Do-er pathing*/}
           <li className="nav-item mx-1">
-              <Route render={({ history}) => (
-                  <p
-                      onClick={() => { this.handleRedirectToService(history) }}
-                  >
-                      Become a do-er!
-                  </p>
+              <Route exact path="/" render={({ history}) => (
+                  <Link onClick={() => { this.handleRedirectToService(history) }}>
+                      <p>Become a do-er!</p>
+                  </Link>
               )} />
+              <Route exact path="/profile" render={({ history}) => (
+                  <Link onClick={() => { this.handleRedirectToService(history) }}>
+                      <p>Become a do-er!</p>
+                  </Link>
+              )} />
+              {/*When in profile, service link appears*/}
+              <Route path="/services" render={({ history }) => (
+                  <Link to={"/"}>
+                      <p>go back to homepage</p>
+                  </Link>
+                  )}/>
           </li>
+          {/*User logout stuff*/}
           {this.state.username !== "" ? (
               <>
                   <li className="nav-item mx-2 pt-1">
                       <Link to="/profile">
-                          <a className="rounded px-3 btn btn-md btn-light" >Hello {this.state.username}!</a>
+                          <a className="rounded px-3 btn btn-md btn-light" ><img src= {this.state.profileimg} className="img-fluid-sm"/> {this.state.username} </a>
                       </Link>
                   </li>
                   <Route render={({ history}) => (
@@ -139,7 +152,8 @@ export default class Login extends Component {
                   )} />
               </>
 
-          ) :(
+          ) : (
+              //Sign in & Login
               <>
                   <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelSign()}>Sign Up</a></li>
                   <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelLogin()}>Login</a></li>
@@ -147,9 +161,9 @@ export default class Login extends Component {
           )}
           <Modal show={this.state.showSignup} 
                  onHide={() => this.handleModelSign()}>
-              <Modal.Header>
-                  <Modal.Title>Sign Up</Modal.Title>
-              </Modal.Header>
+              {/*<Modal.Header>*/}
+              {/*    <Modal.Title>Sign Up</Modal.Title>*/}
+              {/*</Modal.Header>*/}
               <Modal.Body>
                   <div className="container">
                       <div className="form-group">
@@ -180,7 +194,7 @@ export default class Login extends Component {
 
          <Modal show={this.state.showLogin} onHide={() => this.handleModelLogin()}>
              <Modal.Header>
-                 <Modal.Title>Sign Up</Modal.Title>
+                 <Modal.Title>Login</Modal.Title>
              </Modal.Header>
              <Modal.Body>
                  <div className="container">

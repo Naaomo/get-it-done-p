@@ -1,0 +1,36 @@
+.img-thumbnail{
+   width:200px;
+   border-radius: 50% !important;
+}
+.img-fluid{
+   width:200px;
+   border-radius: 50%;
+   opacity: 1;
+   transition: .5s ease;
+   backface-visibility: hidden;
+   cursor: pointer;
+}
+.img-fluid:hover {
+   /*transform: scale(1.5);*/
+   border-radius: 10px;
+}
+
+h3{
+   background: linear-gradient(80deg, #FFBFC5 0%, #A8D1E7 50%, #B3DBD8 100%);
+   /*background: #FEE5E0;*/
+   border-radius: 10px;
+   color: white;
+}
+
+.card{
+   border: 1px solid rgba(255, 0, 0, 0) !important;
+}
+
+.card-header{
+   background: #A8D1E7 !important;
+   color: white !important;
+}
+
+.btn-info{
+   background: #B3DBD8 !important;
+}

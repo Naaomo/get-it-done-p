@@ -30,13 +30,13 @@ class App extends React.Component {
         let cookieArr = [];
         let cookieData = {};
         if(document.cookie){
-            // pageCookie = document.cookie}`;
             //userID=2; displayName=Naomi
+            //!sometimes userID is missing upon refresh
             cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
 
             cookieArr.forEach((e,i) => {
                 var data = e.split('=')
-                cookieData[data[0]] = data[1];
+                cookieData[data[0].trim()] = decodeURIComponent(data[1]);
             })
 
             return cookieData
@@ -47,13 +47,13 @@ class App extends React.Component {
     }
 
   render() {
+      //Checking cookie
       let pageCookie = 'This is the frontend'
       if(document.cookie){
           pageCookie = `Your page cookies are ${document.cookie}`;
-          console.log(document.cookie)
+          console.log(pageCookie)
       }
-      
-      // const {referrer} = this.state;
+
       return (
           <div>
               <Router>

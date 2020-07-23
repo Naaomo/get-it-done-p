@@ -3,6 +3,7 @@ import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
 import './main.css';
 import { withRouter } from "react-router-dom";
+const GOOGLE_API_KEY = process.env.REACT_APP_PLACE_API_KEY;
 
 
 class Main extends React.Component {
@@ -13,12 +14,14 @@ class Main extends React.Component {
       serviceType: [],
       filteredService: "1",
       isSubmitted: "",
-      locality: ""
+      locality: "",
+      nearbyPlaceId: ""
     }
   }
 
   componentDidMount = () => {
     this.getServiceType();
+   
   }
 
 
@@ -30,7 +33,12 @@ class Main extends React.Component {
       serviceType: serviceData
     })
   }
-
+  // handleService = (e) => {
+  //   const { value } = e.target; 
+  //   this.setState({
+  //     filteredService: value
+  //   })
+  // }
   handleSearch = async () => {
 
     const providerList = await fetch (`/services/servicebyidandloc/${this.state.filteredService}/${this.state.locality}`);
@@ -45,9 +53,38 @@ class Main extends React.Component {
         filteredService: serviceID
     })
   }
+  nearbySearch = async () => {
+    const nearbyProviders = await fetch (`/services`);
+    const nearbyData = await nearbyProviders.json();
+    this.props.getProviders(nearbyData)
+    this.props.history.push('/getService')
+  }
+ 
+  getLocation = () => {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(this.showPosition);
+    } else {
+      console.log("Geolocation is not supported by this browser.");
+    } 
+    
+    }
 
-
+  showPosition = (position) => {
+    const { latitude, longitude } = position.coords;
+    fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y`)
+    .then(response =>  response.json()) 
+    .then(data => {
+      const placeId = data.results[0].place_id;
+      console.log(placeId)
+      this.setState({
+       nearbyPlaceId: placeId
+      })
+    }) 
+    this.nearbySearch()
+    }
+   
     render() {
+      const serviceTypeID = this.state.serviceType
         return (
             <div className="main-section position-relative overflow-hidden p-3 p-md-5 m-md-3">
                 <div className="container d-flex flex-column">
@@ -76,7 +113,7 @@ class Main extends React.Component {
                                       }
                                       )}
                                     </select>
-                                    <button className="btn btn-success mb-2" onClick={() => {this.handleSearch()}}>
+                                    <button className="btn btn-outline-success mb-2 btn-search" onClick={() => {this.handleSearch()}}>
                                         <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
                                              fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                             <path fillRule="evenodd"
@@ -85,6 +122,16 @@ class Main extends React.Component {
                                                   d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
                                         </svg>
                                         &nbsp;&nbsp;Search
+                                    </button>
+                                    <button className="btn btn-outline-success mb-2 btn-search" onClick={() => {this.getLocation()}}>
+                                        <svg width="1em" height="1em" viewBox="0 0 16 16" className="bi bi-search"
+                                             fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                            <path fillRule="evenodd"
+                                                  d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z"/>
+                                            <path fillRule="evenodd"
+                                                  d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z"/>
+                                        </svg>
+                                        &nbsp;&nbsp;Search Nearby
                                     </button>
                                 </div>
                             </div>

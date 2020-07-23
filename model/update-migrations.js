@@ -24,7 +24,7 @@ con.connect(function(err) {
         if (err) throw err;
         console.log("Altered `orders` table");
     });
-
+    
     console.log("Closing...");
 
     con.end();

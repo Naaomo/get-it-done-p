@@ -4,3 +4,8 @@
     background-size: 100% auto;
     background-position: center;
 }
+
+.btn-success{
+    background: #3AA682 !important;
+    border-color: #3AA682 !important;
+}

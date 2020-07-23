@@ -4,3 +4,6 @@
 /*    background-size: 100% auto;*/
 /*    background-position: center;*/
 /*}*/
+.btn-search {
+  margin-left: 5px !important;
+}

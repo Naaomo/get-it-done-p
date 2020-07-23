@@ -52,7 +52,7 @@ class GetService extends React.Component {
             <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
           </div>
         </Alert>
-          <div className="card-container">
+          <div className="card-container-flex">
           {this.props.providersList.map(data => {
             const currency = data.price.toLocaleString('en-US', usDollar)
             return (

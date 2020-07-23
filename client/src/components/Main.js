@@ -11,7 +11,7 @@ class Main extends React.Component {
     super(props) 
     this.state = {
       serviceType: [],
-      filteredService: [],
+      filteredService: "1",
       isSubmitted: "",
       locality: ""
     }
@@ -33,16 +33,16 @@ class Main extends React.Component {
 
   handleSearch = async () => {
 
-    const providerList = await fetch (`/services`);
+    const providerList = await fetch (`/services/servicebyidandloc/${this.state.filteredService}/${this.state.locality}`);
     const providersData = await providerList.json();
-    this.props.getProviders(providersData)
-    this.props.history.push('/getService')
+    this.props.getProviders(providersData);
+    this.props.history.push('/getService');
   }
 
   handleService = (e) => {
-    const { value } = e.target; 
+    const serviceID = e.target.value;
     this.setState({
-      filterService: value
+        filteredService: serviceID
     })
   }
 
@@ -72,7 +72,7 @@ class Main extends React.Component {
                                     />
                                     <select className="custom-select rounded mb-2 mr-sm-2" onChange={(e) => this.handleService(e)}>
                                       {this.state.serviceType.map(item => {
-                                        return <option key={item.st_id} value={item.service}>{item.service}</option>
+                                        return <option key={item.st_id} value={item.st_id}>{item.service}</option>
                                       }
                                       )}
                                     </select>

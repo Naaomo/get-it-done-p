@@ -2,7 +2,7 @@ import React from 'react';
 
 // import {withRouter} from "react-router-dom";
 import './mapView.css';
-import {Map, Marker, TileLayer} from "react-leaflet";
+import {Map, Marker, TileLayer, Popup} from "react-leaflet";
 
 
 class MapView extends React.Component{
@@ -10,12 +10,19 @@ class MapView extends React.Component{
         super(props);
         this.state = {
             serviceLocations: [],
-            locality: ""
+            startLat: 5.577895400000001,
+            startLng: -0.2305186,
+            zoom: 15,
+            activeService: null
         }
     }
 
     componentDidMount() {
-        this.getServiceLocations();
+        // this.getServiceLocations();
+        this.setState({
+            startLat: this.props.services[0].loc_lat,
+            startLng: this.props.services[0].loc_lng,
+        })
     }
 
     async getServiceLocations(){
@@ -27,16 +34,28 @@ class MapView extends React.Component{
     }
 
     render() {
+        const usDollar = {style: "currency", currency: "USD"}
         return (
             <div>
-                <div><h1>{`Services found in ${this.state.locality}`}</h1></div>
                 <div>
-                    <Map center={[5.577895400000001, -0.2305186]} zoom={15}>
+                    <Map center={[this.state.startLat, this.state.startLng]} zoom={this.state.zoom}>
                         <TileLayer
                             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                             attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                         />
-                        {this.state.serviceLocations.map(service => <Marker key={service.sp_id} position={[service.loc_lat, service.loc_lng]} />)}
+                        {this.props.services.map(service => (
+                            <Marker
+                                key={service.sp_id}
+                                position={[service.loc_lat, service.loc_lng]}
+                                onClick={() => this.setState({activeService: service})}
+                            />
+                            )
+                        )}
+                        {this.state.activeService && (
+                            <Popup position={[this.state.activeService.loc_lat, this.state.activeService.loc_lng]} onClose={() => this.setState({activeService: null})}>
+                                <div><h5>{this.state.activeService.price.toLocaleString('en-US', usDollar)}</h5></div>
+                            </Popup>
+                        )}
                     </Map>
                 </div>
             </div>

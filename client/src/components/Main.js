@@ -12,7 +12,7 @@ class Main extends React.Component {
     super(props) 
     this.state = {
       serviceType: [],
-      filteredService: "",
+      filteredService: "1",
       isSubmitted: "",
       locality: "",
       nearbyPlaceId: ""
@@ -33,17 +33,25 @@ class Main extends React.Component {
       serviceType: serviceData
     })
   }
-  handleService = (e) => {
-    const { value } = e.target; 
-    this.setState({
-      filteredService: value
-    })
-  }
+  // handleService = (e) => {
+  //   const { value } = e.target; 
+  //   this.setState({
+  //     filteredService: value
+  //   })
+  // }
   handleSearch = async () => {
-    const providerList = await fetch (`/services`);
+
+    const providerList = await fetch (`/services/servicebyidandloc/${this.state.filteredService}/${this.state.locality}`);
     const providersData = await providerList.json();
-    this.props.getProviders(providersData)
-    this.props.history.push('/getService')
+    this.props.getProviders(providersData);
+    this.props.history.push('/getService');
+  }
+
+  handleService = (e) => {
+    const serviceID = e.target.value;
+    this.setState({
+        filteredService: serviceID
+    })
   }
   nearbySearch = async () => {
     const nearbyProviders = await fetch (`/services`);

@@ -26,7 +26,6 @@ class App extends React.Component {
 
   //repeated function?
     translateCookie = () => {
-        let pageCookie = ''
         let cookieArr = [];
         let cookieData = {};
         if(document.cookie){
@@ -40,22 +39,14 @@ class App extends React.Component {
             })
 
             return cookieData
-            // console.log(cookieData)
         }else{
             return false;
         }
     }
 
   render() {
-      //Checking cookie
-      let pageCookie = 'This is the frontend'
-      if(document.cookie){
-          pageCookie = `Your page cookies are ${document.cookie}`;
-          console.log(pageCookie)
-      }
-
       return (
-          <div>
+          <div className="app">
               <Router>
                   <nav className="py-3 navbar navbar-expand-lg absolute-top navbar-light" style={{top: 0}}>
                       <div className="container">

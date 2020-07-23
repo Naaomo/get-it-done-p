@@ -1,5 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Mulish:wght@400;500;600&display=swap');
 
+.media img{
+    height: 85%;
+    width: 25%;
+}
+
+.media-body img{
+    height: 15px;
+    width: 15px;
+}
 *, body {
   font-family: 'Mulish', sans-serif;
 } 

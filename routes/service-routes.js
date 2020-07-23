@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 const db = require('../model/helper');
 const fetch = require('node-fetch');
+const sgMail = require('@sendgrid/mail');
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 
 //Get all ServiceProviders
 router.get('/', function (req, res, next) {
@@ -62,6 +64,25 @@ router.post('/book', function (req, res){
     db(`insert into orders(u_id, sp_id, book_date, book_time) values(${req.body.u_id},${req.body.sp_id}, date("${req.body.book_date}"), time("${req.body.book_time}"));`)
         .then(result => {
             console.log(result.data);
+            let fromUser = {}, toUser ={};
+            db(`select * from users where u_id=${req.body.u_id} or u_id=${req.body.service_owner_id};`)
+                .then(result => {
+                    for(let user of result.data){
+                        if (user.u_id == req.body.u_id) fromUser = user;
+                        if (user.u_id == req.body.service_owner_id) toUser = user;
+                    }
+                    console.log(`To Email: ${toUser.email}`);
+                    const msg = {
+                        to: toUser.email,
+                        from: 'nanette@tayloredcode.com',
+                        subject: 'Get It Done - Service Booking',
+                        text: 'and easy to do anywhere, even with Node.js',
+                        html: `<div><h3>Hello ${toUser.displayName},</h3><p>${fromUser.displayName} would like to book your services on ${req.body.book_date} at ${req.body.book_time}. ${fromUser.displayName} can be contacted at ${fromUser.email}</p><p>Get It Done!!</p></div>`,
+                    };
+                    try{
+                        sgMail.send(msg);
+                    }catch(err){console.log(err)}
+                }).catch(err => console.log(err))
             res.status(201).send(result.data);
         })
         .catch(err => res.status(500).send(err))

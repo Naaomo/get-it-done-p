@@ -12,7 +12,7 @@ class Main extends React.Component {
     this.state = {
       serviceType: [],
       filteredService: [],
-      isSubmited: "",
+      isSubmitted: "",
       locality: ""
     }
   }
@@ -46,11 +46,7 @@ class Main extends React.Component {
     })
   }
 
-  // geocodeByAddress('Mohali, Punjab')
-  // .then(results => getLatLng(results[0]))
-  // .then(({ lat, lng }) =>
-  //   console.log('Successfully got latitude and longitude', { lat, lng })
-  // );
+
     render() {
         return (
             <div className="main-section position-relative overflow-hidden p-3 p-md-5 m-md-3">

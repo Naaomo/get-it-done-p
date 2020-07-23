@@ -123,7 +123,8 @@ const authenticateUser = (email, password, done) => {
                     return done(null, false, { message: 'Password incorrect'});
                 }
             } catch (err){
-                return done(e);
+                console.log(err)
+                return done(err);
             }
         })
 }

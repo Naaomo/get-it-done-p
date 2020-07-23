@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Modal } from 'react-bootstrap';
 import './login.css';
+import {Link, Route} from "react-router-dom";
 
 export default class Login extends Component {
   constructor(props) {
@@ -13,7 +14,8 @@ export default class Login extends Component {
       email: "",
       password: "",
       errorMessage: "",
-        username: ""
+        username: "",
+        profileimg:"",
     };
   }
 
@@ -23,16 +25,17 @@ export default class Login extends Component {
       let cookieData = {};
       if(document.cookie){
           // pageCookie = document.cookie}`;
-          //userID=2; displayName=Naomi
+          //userID=2; displayName=Naomi; profile_img
           cookieArr = document.cookie.replace("'", "").replace(" ", "").split(';');
 
           cookieArr.forEach((e,i) => {
               var data = e.split('=')
-              cookieData[data[0]] = data[1];
+              cookieData[data[0].trim()] = decodeURIComponent(data[1]);
           })
 
           this.setState({
-              username: cookieData.displayName
+              username: cookieData.displayName,
+              profileimg: cookieData.profile_img
           })
           // console.log(cookieData)
       }
@@ -70,7 +73,6 @@ export default class Login extends Component {
     })
     .catch(err => console.log(err));
     this.handleModelLogin()
-      //reload document upon login
     document.location.reload();
   }
 
@@ -97,25 +99,61 @@ export default class Login extends Component {
       this.handleModelLogin();
   }
 
-  handleLogout = () => {
+  handleLogout = (history) => {
       document.cookie = document.cookie + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       this.setState({
           username: ""
       })
-      alert("Logged out!")
+
+      history.push("/")
+  }
+
+  handleRedirectToService = (history) => {
+      if(this.state.username !== ""){
+          history.push("/services");
+      }else{
+          this.handleModelSign();
+      }
   }
 
   render() {
 
     return (
       <>
+          {/*Do-er pathing*/}
+          <li className="nav-item mx-1">
+              <Route exact path="/" render={({ history}) => (
+                  <Link onClick={() => { this.handleRedirectToService(history) }}>
+                      <p>Become a do-er!</p>
+                  </Link>
+              )} />
+              <Route exact path="/profile" render={({ history}) => (
+                  <Link onClick={() => { this.handleRedirectToService(history) }}>
+                      <p>Become a do-er!</p>
+                  </Link>
+              )} />
+              {/*When in profile, service link appears*/}
+              <Route path="/services" render={({ history }) => (
+                  <Link to={"/"}>
+                      <p>go back to homepage</p>
+                  </Link>
+                  )}/>
+          </li>
+          {/*User logout stuff*/}
           {this.state.username !== "" ? (
               <>
-                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-light" >Hello {this.state.username}!</a></li>
-                  <li className="nav-item mr-2 pt-1"><a className="rounded px-3 btn btn-md btn-danger" onClick={() => this.handleLogout()}>Log out</a></li>
+                  <li className="nav-item mx-2 pt-1">
+                      <Link to="/profile">
+                          <a className="rounded px-3 btn btn-md btn-light" ><img src= {this.state.profileimg} className="img-fluid-sm"/> {this.state.username} </a>
+                      </Link>
+                  </li>
+                  <Route render={({ history}) => (
+                      <li className="nav-item mr-2 pt-1"><a className="rounded px-3 btn btn-md btn-danger" onClick={() => this.handleLogout(history)}>Log out</a></li>
+                  )} />
               </>
 
-          ) :(
+          ) : (
+              //Sign in & Login
               <>
                   <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelSign()}>Sign Up</a></li>
                   <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelLogin()}>Login</a></li>
@@ -123,9 +161,9 @@ export default class Login extends Component {
           )}
           <Modal show={this.state.showSignup} 
                  onHide={() => this.handleModelSign()}>
-              <Modal.Header>
-                  <Modal.Title>Sign Up</Modal.Title>
-              </Modal.Header>
+              {/*<Modal.Header>*/}
+              {/*    <Modal.Title>Sign Up</Modal.Title>*/}
+              {/*</Modal.Header>*/}
               <Modal.Body>
                   <div className="container">
                       <div className="form-group">
@@ -156,7 +194,7 @@ export default class Login extends Component {
 
          <Modal show={this.state.showLogin} onHide={() => this.handleModelLogin()}>
              <Modal.Header>
-                 <Modal.Title>Sign Up</Modal.Title>
+                 <Modal.Title>Login</Modal.Title>
              </Modal.Header>
              <Modal.Body>
                  <div className="container">

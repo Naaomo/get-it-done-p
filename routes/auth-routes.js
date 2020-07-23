@@ -99,8 +99,10 @@ router.get('/facebook/redirect', passport.authenticate('facebook'), (req, res) =
     let user = req.user;
     res.clearCookie('userID');
     res.clearCookie('displayName');
+    res.clearCookie('profile_img');
     res.cookie('userID', `${user.u_id}`, {maxAge: 3600000});
     res.cookie('displayName', `${user.displayName}`, {maxAge: 3600000});
+    res.cookie('profile_img', `${user.profile_img}`, {maxAge: 3600000});
     res.redirect(`${FE_URL}/`);
 });
 

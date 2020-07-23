@@ -81,7 +81,7 @@ class GetService extends React.Component {
                 <div className="container">
                     <div className="form-group">
                         <label for="date">Pick a date</label>
-                        <input type="date" onChange={e => {this.handleChange(e)}}className="form-control" id="date" name="date" />
+                        <input type="date" onChange={e => {this.handleChange(e)}} className="form-control" id="date" name="date" />
                     </div>
                     <div className="form-group">
                         <label for="time">Select a time</label>

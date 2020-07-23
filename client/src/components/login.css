@@ -1,3 +1,13 @@
+.img-home{
+    height: 20px;
+    position: relative;
+    bottom: 3px;
+}
+
+.active{
+    background: #00B7FF !important;
+}
+
 .btn-light{
     background:#FFBFC5 !important;
     color: white !important;

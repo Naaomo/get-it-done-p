@@ -57,9 +57,10 @@ class App extends React.Component {
       return (
           <div>
               <Router>
-                  <nav className="py-3 navbar navbar-expand-lg sticky-top navbar-light" style={{top: 0}}>
+                  <nav className="py-3 navbar navbar-expand-lg absolute-top navbar-light" style={{top: 0}}>
                       <div className="container">
-                          <Link className="navbar-brand py-0" to="/"><span></span><img src="./images/logo.png"/></Link>
+                          {/*<Link className="navbar-brand d-flex fixed-top" style={{left: 400, top:11}} to="/"><span></span><img src="./images/logo.png"/></Link>*/}
+                          <Link className="navbar-brand d-flex" to="/"><span></span><img src="./images/logo.png"/></Link>
                           <button className="navbar-toggler" type="button" data-toggle="collapse"
                                   data-target="#navbar-content" aria-controls="navbar-content" aria-expanded="false"
                                   aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span>

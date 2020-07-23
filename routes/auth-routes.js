@@ -63,11 +63,13 @@ router.post('/login', passport.authenticate('local', {
 router.get('/login/redirect', (req, res) => {
     res.clearCookie('userID');
     res.clearCookie('displayName');
+    res.clearCookie('profile_img');
     let user = req.user;
     console.log("FROM AUTH/LOGIN");
     console.log(user);
     res.cookie('userID', `${user.u_id}`, {maxAge: 3600000});
     res.cookie('displayName', `${user.displayName}`, {maxAge: 3600000});
+    res.cookie('profile_img', `${user.profile_img}`, {maxAge: 3600000});
     res.redirect(`${FE_URL}/`);
 });
 
@@ -81,8 +83,10 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
     let user = req.user;
     res.clearCookie('userID');
     res.clearCookie('displayName');
+    res.clearCookie('profile_img');
     res.cookie('userID', `${user.u_id}`, {maxAge: 3600000});
     res.cookie('displayName', `${user.displayName}`, {maxAge: 3600000});
+    res.cookie('profile_img', `${user.profile_img}`, {maxAge: 3600000});
     res.redirect(`${FE_URL}/`);
 });
 

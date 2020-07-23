@@ -36,7 +36,7 @@ class Profile extends Component {
         return (
             <div className="container">
                 <div className="container text-center">
-                    <img src= {this.state.userData.profile_img} className="img-fluid"/>
+                    <img src= {this.state.userData.profile_img} className="img-fluid mb-2"/>
                     {/*Being able to update image*/}
                     <h3>Welcome back, {this.state.userData.displayName}!</h3>
                 </div>
@@ -55,9 +55,10 @@ class Profile extends Component {
                                                 <div className="card">
                                                     <h5 className="card-header btn-info">{e.service}</h5>
                                                     <div className="card-body">
-                                                        <p className="card-title">{e.loc_description}</p>
+                                                        {/*<p className="card-title">Service Description</p>*/}
                                                         <p className="card-text">{e.description}</p>
-                                                        <p className="card-text">${e.price}</p>
+                                                        <p className="card-text">{e.loc_description}</p>
+                                                        <p className="card-text text-right">${e.price}</p>
                                                     </div>
                                                 </div>
                                             )
@@ -69,7 +70,7 @@ class Profile extends Component {
                     </div>
                 </div>
 
-            {/*  TODO  Booked services, move to top later*/}
+            {/*  TODO  Booked services*/}
 
                 <div className="col-5 float-right">
                     <div className="card">

@@ -21,6 +21,7 @@ class GiveService extends React.Component {
         this.getCookies();
     }
 
+    //submission error???
     getCookies(){
         console.log("Cookies are: " + window.document.cookie);
         let cookieString = window.document.cookie;

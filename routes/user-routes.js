@@ -13,8 +13,14 @@ router.get('/:id',  (req, res) => {
 
 // Get's all services offered by a person
 router.get('/services/:id',  (req, res) => {
-    db(`select serviceType.st_id as 'st_id', service, description, price, loc_description from users inner join  serviceProviders on users.u_id = serviceProviders.u_id inner join serviceType on serviceProviders.st_id = serviceType.st_id where users.u_id=${req.params.id};`)
-        .then(result => {
+    db(`select 
+            serviceType.st_id as 'st_id', 
+            service, description, price, loc_description 
+            from users 
+            inner join serviceProviders on users.u_id = serviceProviders.u_id 
+            inner join serviceType on serviceProviders.st_id = serviceType.st_id 
+            where users.u_id=${req.params.id};
+    `).then(result => {
             res.send(result.data)
         })
         .catch(err => res.status(500).send(err))

@@ -12,7 +12,7 @@ class Main extends React.Component {
     this.state = {
       serviceType: [],
       filteredService: [],
-      isSubmited: "",
+      isSubmitted: "",
       locality: ""
     }
   }

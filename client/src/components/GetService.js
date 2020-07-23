@@ -78,7 +78,8 @@ class GetService extends React.Component {
               u_id: cookieData.userID,
               sp_id: provider.sp_id,
               book_date: this.state.date,
-              book_time: this.state.time
+              book_time: this.state.time,
+              service_owner_id: provider.service_owner_id
           })
       });
 

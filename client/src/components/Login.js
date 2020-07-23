@@ -104,8 +104,8 @@ export default class Login extends Component {
       this.setState({
           username: ""
       })
-
-      history.push("/")
+      fetch('/auth/logout').then(response => response.json());
+      history.push("/");
   }
 
   handleRedirectToService = (history) => {
@@ -187,9 +187,9 @@ export default class Login extends Component {
           )}
           <Modal show={this.state.showSignup} 
                  onHide={() => this.handleModelSign()}>
-              {/*<Modal.Header>*/}
-              {/*    <Modal.Title>Sign Up</Modal.Title>*/}
-              {/*</Modal.Header>*/}
+              <Modal.Header>
+                  <Modal.Title>Sign Up</Modal.Title>
+              </Modal.Header>
               <Modal.Body>
                   <div className="container">
                       <div className="form-group">

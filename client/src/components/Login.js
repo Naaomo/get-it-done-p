@@ -97,12 +97,13 @@ export default class Login extends Component {
       this.handleModelLogin();
   }
 
-  handleLogout = () => {
+  handleLogout = (history) => {
       document.cookie = document.cookie + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
       this.setState({
           username: ""
       })
-      document.location.reload();
+
+      history.push("/")
   }
 
   handleRedirectToService = (history) => {
@@ -122,7 +123,7 @@ export default class Login extends Component {
                   <p
                       onClick={() => { this.handleRedirectToService(history) }}
                   >
-                    Do-ers
+                      Become a do-er!
                   </p>
               )} />
           </li>
@@ -133,13 +134,15 @@ export default class Login extends Component {
                           <a className="rounded px-3 btn btn-md btn-light" >Hello {this.state.username}!</a>
                       </Link>
                   </li>
-                  <li className="nav-item mr-2 pt-2"><a className="rounded px-3 btn btn-md btn-danger" onClick={() => this.handleLogout()}>Log out</a></li>
+                  <Route render={({ history}) => (
+                      <li className="nav-item mr-2 pt-1"><a className="rounded px-3 btn btn-md btn-danger" onClick={() => this.handleLogout(history)}>Log out</a></li>
+                  )} />
               </>
 
           ) :(
               <>
-                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-success" onClick={() => this.handleModelSign()}>Sign Up</a></li>
-                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-success" onClick={() => this.handleModelLogin()}>Login</a></li>
+                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelSign()}>Sign Up</a></li>
+                  <li className="nav-item mx-2 pt-1"><a className="rounded px-3 btn btn-md btn-info" onClick={() => this.handleModelLogin()}>Login</a></li>
               </>
           )}
           <Modal show={this.state.showSignup} 

@@ -38,6 +38,8 @@ class Profile extends Component {
     render() {
         return (
             <div>
+                {/*this.state.userdata.whatevercookieimg*/}
+                <img src="https://i.pinimg.com/280x280_RS/be/3c/fc/be3cfcf670b49e279b59aa21257596ee.jpg" alt=""/>
                 <div className="card">
                     <div className="card-body">
                         <h5 className="card-title">
@@ -45,6 +47,7 @@ class Profile extends Component {
                         </h5>
                     </div>
                 </div>
+                {/*not a function???*/}
                 {this.state.profileData.map((e,i) => {
                     return (
                         <div className="card">

@@ -1,6 +1,6 @@
 import React from 'react';
 import './App.css';
-import GiveServiceNaomi from './components/GiveServiceNaomi';
+import GiveService from "./components/GiveService";
 import GetService from './components/GetService';
 import Login from './components/Login';
 import Main from './components/Main';
@@ -70,7 +70,7 @@ class App extends React.Component {
                               </ul>
                           </div>
                       </div>
-                  </nav>
+                      </nav>
                   <Route exact path="/">
                       <Main getProviders={(providersData) => this.getProviders(providersData)}/>
                   </Route>
@@ -78,7 +78,7 @@ class App extends React.Component {
                       <GetService providersList = {this.state.providers} />
                   </Route>
                   <Route exact path="/services">
-                      <GiveServiceNaomi/>
+                      <GiveService/>
                   </Route>
                   <Route exact path="/map">
                       <MapView />
@@ -88,7 +88,7 @@ class App extends React.Component {
                   </Route>
               </Router>
           </div>
-      );
+    );
   }
 }
 

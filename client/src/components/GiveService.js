@@ -1,5 +1,6 @@
 import React from 'react';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { Alert, Button } from 'react-bootstrap';
 import './giveService.css';
 import {Alert, Button} from "react-bootstrap";
 
@@ -17,6 +18,8 @@ class GiveService extends React.Component {
             contact: null,
             description: null,
             images: [],
+            show: false,
+            showSubmit: false
         }
     }
     componentDidMount = () => {
@@ -82,9 +85,11 @@ class GiveService extends React.Component {
             })
         });
 
-        let json = await response.json();
+        let json = await response.json()
         console.log(json);
+        this.setShow();
     }
+
     uploadImages = (e) => {
       console.log(e.target.files[0])
       const {images} = this.state;
@@ -101,9 +106,49 @@ class GiveService extends React.Component {
         images : images
       })
     }
+    handleUpload = () => {
+      let file = this.state.images;
+      let formData = new FormData();
+      console.log(formData, file)
+      formData.append('image', file)
+      fetch(`/services/uploadImg`, {
+        mode: 'no-cors',
+        method: 'POST',
+        body: JSON.stringify({
+          images: formData,
+          u_id: this.state.u_id
+        }) 
+      })                                                                                                                                                                                                       
+    .then(response => {   
+        // console.log(response)                                                                                                                                                            
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        return response;
+      }
+    })
+    .catch(e => {
+      console.log('There has been a problem with your fetch operation: ' + e.message);
+    });
+    }
+    setShow = () => {
+      console.log("arrive?")
+      this.setState({
+        show: !this.state.show,
+        showSubmit: false
+      })
+      
+    }
     render() {
-     
+   
         return (
+          <>
+            <Alert show={this.state.show} variant="success">
+              <div className="alert-close">
+                <p>Your form has been submitted</p>
+                <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
+              </div>
+            </Alert>
             <div className="container align-content-center">
                 <div className="text-center mb-4"><h1>Become A Do-er Now</h1></div>
                 <Alert show={this.state.alertShow} variant="success">
@@ -146,6 +191,9 @@ class GiveService extends React.Component {
                     <input type="file" onChange={(e) => {this.uploadImages(e)}}class="custom-file-input" id="inputGroupFile02"/>
                     <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
                   </div>
+                  <div class="input-group-append">
+                    <button class="input-group-text" onClick={() => {this.handleUpload()}}>Upload</button>
+                  </div>
                 </div>
                     <div className="preview-container">
                        { this.state.images.map((item, index) => {
@@ -165,6 +213,7 @@ class GiveService extends React.Component {
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={()=>this.handleServiceSubmit()}>Add Service</button>
             </div>
+            </>
         );
     }
 }

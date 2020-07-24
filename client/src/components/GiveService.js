@@ -1,5 +1,6 @@
 import React from 'react';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
+import { Alert, Button } from 'react-bootstrap';
 import './giveService.css';
 
 class GiveService extends React.Component {
@@ -15,6 +16,8 @@ class GiveService extends React.Component {
             contact: null,
             description: null,
             images: [],
+            show: false,
+            showSubmit: false
         }
     }
     componentDidMount = () => {
@@ -54,14 +57,6 @@ class GiveService extends React.Component {
     }
 
     async handleServiceSubmit(){
-        console.log(JSON.stringify({
-            u_id: this.state.u_id,
-            st_id: this.state.service_id,
-            price: this.state.price,
-            description: this.state.description,
-            contact: this.state.contact,
-            place_id: this.state.place_id
-            }));
         let response = await fetch("/services/add", {
             method: "POST",
             headers: {
@@ -77,9 +72,11 @@ class GiveService extends React.Component {
             })
         });
 
-        let json = await response.json();
+        let json = await response.json()
         console.log(json);
+        this.setShow();
     }
+
     uploadImages = (e) => {
       console.log(e.target.files[0])
       const {images} = this.state;
@@ -96,10 +93,50 @@ class GiveService extends React.Component {
         images : images
       })
     }
+    handleUpload = () => {
+      let file = this.state.images;
+      let formData = new FormData();
+      console.log(formData, file)
+      formData.append('image', file)
+      fetch(`/services/uploadImg`, {
+        mode: 'no-cors',
+        method: 'POST',
+        body: JSON.stringify({
+          images: formData,
+          u_id: this.state.u_id
+        }) 
+      })                                                                                                                                                                                                       
+    .then(response => {   
+        // console.log(response)                                                                                                                                                            
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      } else {
+        return response;
+      }
+    })
+    .catch(e => {
+      console.log('There has been a problem with your fetch operation: ' + e.message);
+    });
+    }
+    setShow = () => {
+      console.log("arrive?")
+      this.setState({
+        show: !this.state.show,
+        showSubmit: false
+      })
+      
+    }
     render() {
-     
+   
         return (
             <div className="container align-content-center">
+                <div className="text-center mb-5"><h1><span className="border-bottom border-info">Become A Do-er Now</span></h1></div>
+                <Alert show={this.state.show} variant="success">
+                    <div className="alert-close">
+                        <p>Thank you!! Your service has been added to our database&nbsp;&nbsp;</p>
+                        <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
+                    </div>
+                </Alert>
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label>Service Type</label>
@@ -133,6 +170,9 @@ class GiveService extends React.Component {
                   <div class="custom-file">
                     <input type="file" onChange={(e) => {this.uploadImages(e)}}class="custom-file-input" id="inputGroupFile02"/>
                     <label class="custom-file-label" for="inputGroupFile02">Choose file</label>
+                  </div>
+                  <div class="input-group-append">
+                    <button class="input-group-text" onClick={() => {this.handleUpload()}}>Upload</button>
                   </div>
                 </div>
                     <div className="preview-container">

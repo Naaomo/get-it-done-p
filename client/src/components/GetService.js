@@ -1,7 +1,6 @@
 import React from 'react';
 import './getService.css'
 import MapView from "./MapView";
-import Gardening from './icons/Gardening.png'
 import { Alert, Button, Modal } from 'react-bootstrap';
 import Login from './Login'
 
@@ -110,7 +109,7 @@ class GetService extends React.Component {
    {
        if(this.props.providersList.length < 1){
            return (
-               <div className="text-center">
+               <div className="text-center m-5">
                    <h1>Looks like there are no Do-ers in your area at the moment</h1>
                </div>
            )
@@ -122,7 +121,7 @@ class GetService extends React.Component {
    
     return (
       <div className="position-relative overflow-hidden">
-          <div className="text-center"><h1>Do-ers in {this.state.searchLocality}</h1></div>
+          <div className="text-center mb-5"><h1><span>Do-ers in {this.state.searchLocality}</span></h1></div>
           <Alert show={this.state.show} variant="success">
               <div className="alert-close">
                   <p>Your booking request has been sent to the do-er.</p>
@@ -137,12 +136,14 @@ class GetService extends React.Component {
           </div>
       </Alert>
           <div className="row">
+          <div className="row border border-secondary">
+
               <div className="col-md-5">
                   {this.props.providersList.map(data => {
                       const currency = data.price.toLocaleString('en-US', usDollar)
                       return (
                           <div className="card">
-                              <div className="card-body">
+                              <div className="card-body mb-4">
                                   <div className="row">
                                       <div className="media">
                                           <img src={data.profile_img} className="mr-3" alt={data.service_owner} />
@@ -184,6 +185,7 @@ class GetService extends React.Component {
                 </div>
             </Modal.Body>
         </Modal>
+      </div>
       </div>
     );
   }

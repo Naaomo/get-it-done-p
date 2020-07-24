@@ -2,13 +2,11 @@ import React from 'react';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import { Alert, Button } from 'react-bootstrap';
 import './giveService.css';
-import {Alert, Button} from "react-bootstrap";
 
 class GiveService extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            alertShow: false,
             userName: "",
             serviceType: [],
             u_id: 5,
@@ -26,9 +24,7 @@ class GiveService extends React.Component {
         this.getServiceType();
         this.getCookies();
     }
-    toggleAlert(){
-        this.setState({alertShow: !this.state.alertShow})
-    }
+
     //submission error???
     getCookies(){
         console.log("Cookies are: " + window.document.cookie);
@@ -61,15 +57,6 @@ class GiveService extends React.Component {
     }
 
     async handleServiceSubmit(){
-        console.log(JSON.stringify({
-            u_id: this.state.u_id,
-            st_id: this.state.service_id,
-            price: this.state.price,
-            description: this.state.description,
-            contact: this.state.contact,
-            place_id: this.state.place_id
-            }));
-        this.toggleAlert();
         let response = await fetch("/services/add", {
             method: "POST",
             headers: {
@@ -142,19 +129,12 @@ class GiveService extends React.Component {
     render() {
    
         return (
-          <>
-            <Alert show={this.state.show} variant="success">
-              <div className="alert-close">
-                <p>Your form has been submitted</p>
-                <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
-              </div>
-            </Alert>
             <div className="container align-content-center">
-                <div className="text-center mb-4"><h1>Become A Do-er Now</h1></div>
-                <Alert show={this.state.alertShow} variant="success">
+                <div className="text-center mb-5"><h1><span className="border-bottom border-info">Become A Do-er Now</span></h1></div>
+                <Alert show={this.state.show} variant="success">
                     <div className="alert-close">
                         <p>Thank you!! Your service has been added to our database&nbsp;&nbsp;</p>
-                        <Button variant="outline-success" onClick={() => this.toggleAlert()}>close</Button>
+                        <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
                     </div>
                 </Alert>
                 <div className="form-row">
@@ -213,7 +193,6 @@ class GiveService extends React.Component {
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={()=>this.handleServiceSubmit()}>Add Service</button>
             </div>
-            </>
         );
     }
 }

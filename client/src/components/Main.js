@@ -74,6 +74,7 @@ class Main extends React.Component {
     fetch(`https://maps.googleapis.com/maps/api/geocode/json?latlng=${latitude},${longitude}&key=AIzaSyB8O0QjLaPA4gUeud_KDDtaQH7COiTZ75Y`)
     .then(response =>  response.json()) 
     .then(data => {
+      console.log(data.results[0])
       const placeId = data.results[0].place_id;
       console.log(placeId)
       this.setState({

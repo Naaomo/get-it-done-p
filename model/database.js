@@ -59,7 +59,11 @@ con.connect(function(err) {
       if (err) throw err;
       console.log("Table creation `orders` was successful!");
   });
-
+  sql = "DROP TABLE IF EXISTS images; CREATE TABLE images(u_id INT NOT NULL, url VARCHAR(1000), FOREIGN KEY(u_id) REFERENCES users(u_id));";
+  con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("Table creation `orders` was successful!");
+  });
 
   console.log("Closing...");
 

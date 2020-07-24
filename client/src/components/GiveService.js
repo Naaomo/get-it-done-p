@@ -1,11 +1,13 @@
 import React from 'react';
 import GooglePlacesAutocomplete from "react-google-places-autocomplete";
 import './giveService.css';
+import {Alert, Button} from "react-bootstrap";
 
 class GiveService extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
+            alertShow: false,
             userName: "",
             serviceType: [],
             u_id: 5,
@@ -21,7 +23,9 @@ class GiveService extends React.Component {
         this.getServiceType();
         this.getCookies();
     }
-
+    toggleAlert(){
+        this.setState({alertShow: !this.state.alertShow})
+    }
     //submission error???
     getCookies(){
         console.log("Cookies are: " + window.document.cookie);
@@ -62,6 +66,7 @@ class GiveService extends React.Component {
             contact: this.state.contact,
             place_id: this.state.place_id
             }));
+        this.toggleAlert();
         let response = await fetch("/services/add", {
             method: "POST",
             headers: {
@@ -100,6 +105,13 @@ class GiveService extends React.Component {
      
         return (
             <div className="container align-content-center">
+                <div className="text-center mb-4"><h1>Become A Do-er Now</h1></div>
+                <Alert show={this.state.alertShow} variant="success">
+                    <div className="alert-close">
+                        <p>Thank you!! Your service has been added to our database&nbsp;&nbsp;</p>
+                        <Button variant="outline-success" onClick={() => this.toggleAlert()}>close</Button>
+                    </div>
+                </Alert>
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label>Service Type</label>

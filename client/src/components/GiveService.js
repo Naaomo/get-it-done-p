@@ -57,14 +57,6 @@ class GiveService extends React.Component {
     }
 
     async handleServiceSubmit(){
-        console.log(JSON.stringify({
-            u_id: this.state.u_id,
-            st_id: this.state.service_id,
-            price: this.state.price,
-            description: this.state.description,
-            contact: this.state.contact,
-            place_id: this.state.place_id
-            }));
         let response = await fetch("/services/add", {
             method: "POST",
             headers: {
@@ -137,14 +129,14 @@ class GiveService extends React.Component {
     render() {
    
         return (
-          <>
-            <Alert show={this.state.show} variant="success">
-              <div className="alert-close">
-                <p>Your form has been submitted</p>
-                <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
-              </div>
-            </Alert>
             <div className="container align-content-center">
+                <div className="text-center mb-5"><h1><span className="border-bottom border-info">Become A Do-er Now</span></h1></div>
+                <Alert show={this.state.show} variant="success">
+                    <div className="alert-close">
+                        <p>Thank you!! Your service has been added to our database&nbsp;&nbsp;</p>
+                        <Button variant="outline-success" onClick={() => this.setShow()}>close</Button>
+                    </div>
+                </Alert>
                 <div className="form-row">
                     <div className="form-group col-md-6">
                         <label>Service Type</label>
@@ -201,7 +193,6 @@ class GiveService extends React.Component {
                 </div>
                 <button type="submit" className="btn btn-primary" onClick={()=>this.handleServiceSubmit()}>Add Service</button>
             </div>
-            </>
         );
     }
 }

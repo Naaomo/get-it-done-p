@@ -121,32 +121,8 @@ export default class Login extends Component {
     return (
       <>
           {/*TODO try nav bar*/}
-          {/*New NAV bar*/}
 
-          {/*<nav className="nav nav-pills flex-column flex-sm-row mt-1 pb-5">*/}
-          {/*    <Route exact path="/" render={({ history }) => (*/}
-          {/*        <a className="flex-sm-fill text-sm-center nav-link active" onClick={() => { this.handleRedirectToService(history) }}>*/}
-          {/*            Become a do-er!*/}
-          {/*        </a>*/}
-          {/*    )} />*/}
-
-          {/*    <Route exact path="/profile" render={({ history }) => (*/}
-          {/*        <a className="flex-sm-fill text-sm-center nav-link active" onClick={() => { this.handleRedirectToService(history) }}>*/}
-          {/*            <p>Become a do-er!</p>*/}
-          {/*        </a>*/}
-          {/*    )} />*/}
-
-          {/*    <Route path="/services" render={({ history }) => (*/}
-          {/*        <a className="flex-sm-fill text-sm-center nav-link">*/}
-          {/*        <Link to={"/"}>*/}
-          {/*            <p>go back to homepage<img src="https://img.icons8.com/cotton/64/000000/home--v3.png" className="img-home"/></p>*/}
-          {/*        </Link>*/}
-          {/*        </a>*/}
-          {/*    )}/>*/}
-          {/*</nav>*/}
-
-          {/*OLD Do-er pathing*/}
-
+          {/*Do-er pathing*/}
           <li className="nav-item mx-1 my-3">
               <Route exact path="/" render={({ history}) => (
                   <Link onClick={() => { this.handleRedirectToService(history) }}>

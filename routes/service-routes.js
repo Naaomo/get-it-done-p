@@ -88,6 +88,7 @@ router.post('/book', function (req, res){
         .catch(err => res.status(500).send(err))
 });
 
+//GET booking-history
 router.get('/booking-history/:id', function(req, res){
     db(`select serviceType.st_id as 'st_id', displayName as 'service_owner', service, description, loc_description, price, book_time, book_date, date(order_date) as 'history_date', time(order_date) as 'history_time' from (orders inner join serviceProviders on orders.sp_id = serviceProviders.sp_id) inner join users on serviceProviders.u_id = users.u_id inner join serviceType on serviceProviders.st_id = serviceType.st_id where orders.u_id =${req.params.id};`)
         .then(result => {

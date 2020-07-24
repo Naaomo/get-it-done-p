@@ -34,3 +34,9 @@ h3{
 .btn-info{
    background: #B3DBD8 !important;
 }
+
+.btn-danger-sm{
+   background: #d73f3f !important;
+   color: white !important;
+   font-size: 50% !important;
+}
